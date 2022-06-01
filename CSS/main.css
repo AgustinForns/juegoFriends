@@ -1,0 +1,23 @@
+.contenedor {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+  grid-template-areas: "header header"  "main video"  "footer footer";
+  background-color: beige; }
+  .contenedor header {
+    grid-area: header;
+    background-color: aquamarine; }
+    .contenedor header nav ul li {
+      display: inline-block; }
+      .contenedor header nav ul li a {
+        text-decoration: none;
+        display: inline-block; }
+  .contenedor main {
+    grid-area: main;
+    background-color: antiquewhite; }
+  .contenedor .video {
+    grid-area: video;
+    background-color: blue; }
+  .contenedor footer {
+    grid-area: footer;
+    background-color: gray; }
