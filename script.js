@@ -1,8 +1,77 @@
 
 
+const personaje = [
+    {nombre: "rachel", apellido:"green"},
+    {nombre: "ross", apellido:"geller"},
+    {nombre: "phoebe", apellido:"buffay"},
+    {nombre: "chandler", apellido:"bing" },
+    {nombre: "monica", apellido:"geller" },
+    {nombre: "joey", apellido:"tribbiani"},   
+];
+
+
+class InicioJuego{
+    constructor()
+}
+
+
+
+
+
+
+class Personajes{
+
+    constructor(personaje){
+        this.nombre = personaje.nombre;
+        this.apellido = personaje.apellido;
+    }
+
+    preguntas = [saberNombre, saberApellido];
+
+    saberNombre(){
+        let respuesta = true;
+        alert("Te diremos el apellido de un personaje y tiene que introducir su nombre");
+        const indexNombre = Math.round(Math.random() * 5);
+       nombreIntroducido = prompt(`El nombre del personaje que se apellida ${personaje.apellido[indexNombre]} es:`);
+        if (nombreIntroducido === personaje.nombre[indexNombre] ) {
+            alert(`Correcto. El personaje es: ${personaje.nombre} ${personaje.apellido}`);
+            respuesta = true;
+        } else {
+            alert(`Correcto. El personaje es: ${personaje.nombre} ${personaje.apellido}`);
+            respuesta = false;
+        }
+        
+    }
+
+
+    eleccion(){
+        const indexNombreApellido = Math.round(Math.random() * 2);
+        preguntas[indexNombreApellido];
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const cantidadPreg = ()=>{
-    cantidad = prompt("Cuantas preguntas quieres responder?")
-    if ((cantidad == 1) || (cantidad == 2) || (cantidad == 3) || (cantidad == 4) || (cantidad == 5) || (cantidad == 6) || (cantidad == 7) || (cantidad == 8) || (cantidad == 9) || (cantidad == 10)) {
+    cantidad = prompt("Cuantas preguntas quieres responder? Actualmente puede responder hasta 5 incluidas")
+    if ((cantidad == 1) || (cantidad == 2) || (cantidad == 3) || (cantidad == 4) || (cantidad == 5)) {
         return cantidad
     } else {
         alert("Elije una opcion valida")
@@ -24,6 +93,8 @@ const resumenJuego = (corr, incorr, cantidad)=> {
 }
 
 
+
+
 alert(`Responde con un True y tu respuesta será correcta. Si tienes mas de la mitad correctas ganas el juego. Tienes tres chances (Te diremos al final el resultado)`)
 let decision = "s"
 while ((decision !== "N") && (decision !== "n") ) {
@@ -41,7 +112,7 @@ while ((decision !== "N") && (decision !== "n") ) {
     if (cantidad !== false) {
         resumenJuego(correctas, incorrectas, cantidad)
     } else {
-        alert("Introduce un numero menor 10")
+        alert("Introduce un numero menor 5")
     }
 
     
