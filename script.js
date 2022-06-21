@@ -11,8 +11,16 @@ const datosPersonajes = [
 ];
 
 const inicioJuego =() =>{ 
-    segundoJuego(primerJuego());
+    let nombre = nombreParticipante();
+    segundoJuego(primerJuego(), nombre);
 }
+
+const nombreParticipante = () => {
+    let nombre = prompt("Hola!! Introduce tu nombre para empezar el juego.");
+    return nombre;
+
+}
+
 
 
 const primerJuego = () => {
@@ -78,21 +86,47 @@ const saberApellido = (persona) =>{
     return respuesta;
 }
 
+const imprimirPersonajes = () => {
+    datosPersonajes.forEach(element => {
+        
+    });
+}
+
 const mostrarPersonajes = () => {
-    alert(` La lista de personajes es:
+    let parrafo = document.getElementById("listaPersonajes");
+    parrafo.innerText = `La lista de personajes es: 
     ${datosPersonajes[0].id} ${datosPersonajes[0].nombre} ${datosPersonajes[0].apellido}
     ${datosPersonajes[1].id} ${datosPersonajes[1].nombre} ${datosPersonajes[1].apellido}
     ${datosPersonajes[2].id} ${datosPersonajes[2].nombre} ${datosPersonajes[2].apellido}
     ${datosPersonajes[3].id} ${datosPersonajes[3].nombre} ${datosPersonajes[3].apellido}
     ${datosPersonajes[4].id} ${datosPersonajes[4].nombre} ${datosPersonajes[4].apellido}
-    ${datosPersonajes[5].id} ${datosPersonajes[5].nombre} ${datosPersonajes[5].apellido}
-    
-    `)
+    ${datosPersonajes[5].id} ${datosPersonajes[5].nombre} ${datosPersonajes[5].apellido}`
+}
+
+/* const mostrarRespuesta = () => {
+    let divRespuestas = document.getElementById("respuestas");
+    let respuestas = document.createElement("p");
+    respuestas.innerHTML = ""
+} */
+
+const mensajeGanador = (nombre) => {
+    let divResultado = document.getElementById("resultadoJuego");
+    let resultado = document.createElement("p");
+    resultado.innerText = `Felicidades ${nombre}!! Ganaste el juego.`;
+    divResultado.append(resultado);
 
 }
 
+const mensajePerdedor = (nombre) => {
+    let divResultado = document.getElementById("resultadoJuego");
+    let resultado = document.createElement("p");
+    resultado.innerText = `Ups ${nombre}... Perdiste!!`;
+    divResultado.append(resultado)
+}
 
-const segundoJuego = (resultado) => {
+
+
+const segundoJuego = (resultado, nombre) => {
     if (resultado === true) {
         let nom = prompt("Vamos a ver si te acuerdas lo anterior. Tienes que dar un nombre y apellido sin equivocarte. Primero da un nombre: ");
         if ((datosPersonajes.some(id => id.nombre === nom.toLowerCase())) === true) {
@@ -101,18 +135,23 @@ const segundoJuego = (resultado) => {
                 alert(`Es correcto! El nombre y apellido del personaje es ${nom} ${apell}`);
                 mostrarPersonajes();
                 alert("Ganaste la segunda parte del juego!!")
+                mensajeGanador(nombre);
             } else {
                 alert(`Incorrecto. El nombre y apellido del personaje es ${nom} ${(datosPersonajes.find(id => id.nombre === nom)).apellido}`);
                 mostrarPersonajes();
-                alert("El juego termino!!!")
+                alert("El juego termino!!!");
+                mensajePerdedor(nombre);
             }
         } else {     
             alert(`Incorrecto. El nombre que ingresaste no pertenece a ningun personaje`);
             mostrarPersonajes();
             alert("El juego termino!!!")
+            mensajePerdedor(nombre);
         }   
     } else {
         alert("Nos vemos la proxima!")
+        mostrarPersonajes()
+        mensajePerdedor(nombre);
     }
 
 

@@ -1,23 +1,45 @@
 .contenedor {
   display: grid;
-  grid-template-rows: auto;
-  grid-template-columns: auto;
+  grid-template-rows: 3fr 6fr 1fr;
+  grid-template-columns: 55% 45%;
   grid-template-areas: "header header"  "main video"  "footer footer";
-  background-color: beige; }
+  background-color: beige;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  height: 100vh; }
   .contenedor header {
     grid-area: header;
-    background-color: aquamarine; }
+    background-color: #d8c6c6;
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
     .contenedor header nav ul li {
       display: inline-block; }
       .contenedor header nav ul li a {
         text-decoration: none;
-        display: inline-block; }
+        display: inline-block;
+        background-color: gray;
+        color: black;
+        border-radius: 50px;
+        font-size: 20px;
+        margin: 10px;
+        padding: 10px; }
   .contenedor main {
     grid-area: main;
-    background-color: antiquewhite; }
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    .contenedor main #listaPersonajes {
+      text-align: center; }
+    .contenedor main #resultadoJuego {
+      text-align: center; }
   .contenedor .video {
     grid-area: video;
-    background-color: blue; }
+    background-color: beige; }
   .contenedor footer {
     grid-area: footer;
     background-color: gray; }
+    .contenedor footer p {
+      text-align: center; }
