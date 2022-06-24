@@ -12,6 +12,15 @@ const explicacion1 = document.getElementById("explicacion1");
 const formJuego = document.getElementById("formJuego");
 const pregunta = document.getElementById("pregunta");
 const respuestas = document.getElementById("respuesta");
+const opcion1 = document.getElementById("opcion1");
+const opcion2 = document.getElementById("opcion2");
+const opcion3 = document.getElementById("opcion3");
+const resp1 = document.getElementById("resp1");
+const resp2 = document.getElementById("resp2");
+const resp3 = document.getElementById("resp3");
+
+
+
 
 const formContestacion1 = document.getElementById("formContestacion1");
 const contestacion1 = document.getElementById("contestacion1");
@@ -29,9 +38,22 @@ const datosPersonajes = [
 ];
 
 const preguntasRespuestas = [
-    {id: 1, pregunta: "¿Cómo se llama la cafetería a la que siempre van?", opciones: ["Central Park","Central Perk","Central Cafe"], respCorrecta: "central perk" },
-    {id: 2, pregunta: "¿Como se llama el hijo de ross?",  opciones: ["Ben","Ross Jr.","David"], respCorrecta: "ben" },
-    {id: 3, pregunta: "¿A cuál de los tres chicos conocía Julia Roberts? Di su nombre.",  opciones: ["Ross","Joey","Chandler"], respCorrecta: "chandler" },
+    {id: 1, 
+    pregunta: "¿Cómo se llama la cafetería a la que siempre van?", 
+    opciones: [{resp:"Central Park" , const: false}, {resp:"Central Perk" , const: true}, {resp:"Central Cafe" , const: false}],
+    respCorrecta: "Central Perk",
+},
+
+    {id: 2, 
+    pregunta: "¿Como se llama el hijo de ross?",  
+    opciones: [{resp:"Ben" , const: true}, {resp:"Ross Jr." , const: false}, {resp:"David" , const: false}],
+    respCorrecta: "Ben",
+},
+
+    {id: 3, 
+    pregunta: "¿A cuál de los tres chicos conocía Julia Roberts? Di su nombre.",  
+    opciones:  [{resp:"Ross" , const: false}, {resp:"Joey" , const: false}, {resp:"Chandler" , const: true}]}, 
+
     {id: 4, pregunta: "¿Para qué marca de ropa trabaja Rachel?",  opciones: ["Prada","Ralph Lauren","Gucci"], respCorrecta: "ralph lauren"  },
     {id: 5, pregunta: "¿Cómo se llamaba la compañera de piso de Joey?",   opciones: ["Janine","Janet","Jane"], respCorrecta: "janine" },
     {id: 6, pregunta: "¿A qué fruta es alérgico Ross?",  opciones: ["Manzana","Piña","Kiwi"], respCorrecta: "kiwi" },   
@@ -57,6 +79,26 @@ const nombreParticipante = () => {
     
 }
 
+const primerJuegoPrueba = () => {
+    divExplicacion1.style.display = "block";
+    explicacion1.innerText = `Hola ${nombre}. Tendras que contestar 6 preguntas. Si contestas correctamente tres o mas pasas a la segunda parte del juego.`;
+    divExplicacion1.addEventListener("submit", (e) => {
+        e.preventDefault();
+        divExplicacion1.style.display = "none";
+        let correctas = 0;
+        let incorrectas = 0;
+        let contador = 0;
+       while (contador<2) {
+        let randomNumber = Math.floor(Math.random()*preguntasRespuestas.length);
+        preguntaPrueba(correctas, incorrectas, randomNumber);
+        contador++
+       }        
+        
+    } )
+   
+}
+
+
 
 
 const primerJuego = (nombre) => {
@@ -68,22 +110,146 @@ const primerJuego = (nombre) => {
         let correctas = 0;
         let incorrectas = 0;
         pregunta1(correctas,incorrectas);
-        
- 
-        /* let resultado = resumenJuego(correctas, incorrectas); */
+      
         
     } )
    
 }
 
+const preguntaPrueba = (corr, incorr) => {
+    let contador = 0;
+    let preguntasRespondidas = [];
+    while (contador < 3) {
+        let randomNumber = Math.floor(Math.random()*preguntasRespuestas.length);
+        formContestacion1.style.display = "none";
+        formJuego.style.display = `block`;
+        pregunta.innerText = preguntasRespuestas[randomNumber].pregunta;
+        opcion1.innerText = preguntasRespuestas[randomNumber].opciones[0].resp;
+        opcion2.innerText = preguntasRespuestas[randomNumber].opciones[1].resp;
+        opcion3.innerText = preguntasRespuestas[randomNumber].opciones[2].resp;
+        resp1.value = preguntasRespuestas[randomNumber].opciones[0];
+        resp2.value = preguntasRespuestas[randomNumber].opciones[1];
+        resp3.value = preguntasRespuestas[randomNumber].opciones[2];
+        let opciones = [resp1, resp2,  resp3];
+        if (preguntasRespondidas.some(id => id.id === (randomNumber-1)) === true) {
+            
+        } else {
+            preguntasRespondidas.push(randomNumber)
+        }
+        
+
+        console.log(opciones);
+
+        formJuego.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let opcionElegida;
+            for (const opcion of opciones) {
+                if (opcion.checked) {
+                    console.log(opcion.checked)
+                    opcionElegida = opcion.value;
+                    console.log(opcionElegida);
+                    break
+                }
+            }
+
+            console.log(opcionElegida);
+
+            if ((opcionElegida) === preguntasRespuestas[0].respCorrecta) {
+                formJuego.style.display = "none",
+                formContestacion1.style.display = "block";
+                contestacion1.innerText = "Correcto!!"
+                corr++
+            }
+            else {
+                formJuego.style.display = "none",
+                formContestacion1.style.display = "block";
+                contestacion1.innerText = `Incorrecto. La respuesta es ${preguntasRespuestas[0].respCorrecta.toUpperCase()}`
+                incorr++
+            }
+            
+            formContestacion1.addEventListener("submit", (e) => {
+                e.preventDefault();
+                PreguntaPrueba(corr, incorr, );
+
+            })
+        })
+    }  
+
+}
+const randomPreg = () => {
+    
+ 
+    if(index == questions.length){
+        quizOver();
+    }
+    else{
+        if(answeredQuestions.length > 0){
+            if(answeredQuestions.includes(randomNumber)){
+                randomQuestion();
+            }
+            else {
+                currentIndex = randomNumber;
+                load();
+            }
+        }
+        if(answeredQuestions.length == 0){
+            currentIndex = randomNumber
+            load()
+        }
+        //add the question to list of answered questions
+        answeredQuestions.push(randomNumber)
+    }
+}
+
 const pregunta1 = (corr, incorr) => {
+
+    let cantidadRespondidas;
+
+
+
+
+
     formContestacion1.style.display = "none";
     formJuego.style.display = `block`;
     pregunta.innerText = preguntasRespuestas[0].pregunta;
-    
+    opcion1.innerText = preguntasRespuestas[0].opciones[0].resp;
+    opcion2.innerText = preguntasRespuestas[0].opciones[1].resp;
+    opcion3.innerText = preguntasRespuestas[0].opciones[2].resp;
+    resp1.value = preguntasRespuestas[0].opciones[0];
+    resp2.value = preguntasRespuestas[0].opciones[1];
+    resp3.value = preguntasRespuestas[0].opciones[2];
+    let opciones = [resp1, resp2,  resp3];
+
+    console.log(opciones);
+
     formJuego.addEventListener("submit", (e) => {
         e.preventDefault();
-        let respPartcipante = respuestas.value;
+        let opcionElegida;
+        for (const opcion of opciones) {
+            if (opcion.checked) {
+                console.log(opcion.checked)
+                opcionElegida = opcion.value;
+                console.log(opcionElegida);
+                break
+            }
+        }
+
+        console.log(opcionElegida);
+
+        if ((opcionElegida) === preguntasRespuestas[0].respCorrecta) {
+            formJuego.style.display = "none",
+            formContestacion1.style.display = "block";
+            contestacion1.innerText = "Correcto!!"
+            corr++
+        }
+        else {
+            formJuego.style.display = "none",
+            formContestacion1.style.display = "block";
+            contestacion1.innerText = `Incorrecto. La respuesta es ${preguntasRespuestas[0].respCorrecta.toUpperCase()}`
+            incorr++
+        }
+        
+   /*      let respPartcipante = respuestas.value;
         if (respPartcipante.toLowerCase() === preguntasRespuestas[0].respCorrecta) {
             formJuego.style.display = "none",
             formContestacion1.style.display = "block";
@@ -94,10 +260,9 @@ const pregunta1 = (corr, incorr) => {
             formContestacion1.style.display = "block";
             contestacion1.innerText = `Incorrecto. La respuesta es ${preguntasRespuestas[0].respCorrecta.toUpperCase()}`
             incorr++
-        }
+        } */
         formContestacion1.addEventListener("submit", (e) => {
             e.preventDefault();
-            respuestas.value = "";
             pregunta2(corr, incorr);
         })
     })

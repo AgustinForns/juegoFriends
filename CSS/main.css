@@ -55,6 +55,8 @@
       display: none; }
     .contenedor main #divResultado {
       display: none; }
+    .contenedor main #divPreguntas {
+      display: none; }
   .contenedor .video {
     grid-area: video;
     /* background-image: url('../img/introduccion.jpg');

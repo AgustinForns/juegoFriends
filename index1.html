@@ -15,7 +15,7 @@
 
         <nav>
             <ul>
-                <li><a href="index.html">Juego</a></li>
+                <li><a href="index1.html">Juego</a></li>
                 <li><a href="pages/explicacion.html">Explicacón</a></li>
             </ul>
         </nav>
@@ -23,6 +23,25 @@
     </header>
 
     <main>
+
+        <form action="" id="formJuego">
+            <p id="pregunta"></p>
+           <div>
+             <input type="radio" name="opcion" value="respuesta1" id="resp1">
+             <label for="resp1" id="opcion1"></label>
+           </div>
+           <div>
+            <input type="radio" name="opcion" value="respuesta2" id="resp2">
+            <label for="resp2" id="opcion2"></label>
+          </div>
+          <div>
+            <input type="radio" name="opcion" value="respuesta3" id="resp3">
+            <label for="resp3" id="opcion3"></label>
+          </div>
+
+            <input type="text" id="respuesta" autocomplete="off" >
+            <input type="submit" value="Responder">
+        </form> 
       
         <div id="boxJugar">
             <h3>Animaté y descubre que tanto sabes de la imperdible serie Friends</h3>
@@ -44,26 +63,20 @@
             <input type="text" id="nombre" autocomplete="off">
             <input type="submit" value="Enviar">
         </form>
+
+        <div id="divPreguntas">
+            <div id="pregunta">Question</div>
+            <div id="opciones">
+                <button id="btn1">Answer 1</button>
+                <button id="btn2">Answer 2</button>
+                <button id="btn3">Answer 3</button>
+            </div>
+            <div>
+                <button id="siguiente">Siguiente</button>
+            </div>
+        </div>
         
-        <form action="" id="formJuego">
-            <p id="pregunta"></p>
-           <div>
-             <input type="radio" name="opcion" value="respuesta1" id="resp1">
-             <label for="resp1" id="opcion1"></label>
-           </div>
-           <div>
-            <input type="radio" name="opcion" value="respuesta2" id="resp2">
-            <label for="resp2" id="opcion2"></label>
-          </div>
-          <div>
-            <input type="radio" name="opcion" value="respuesta3" id="resp3">
-            <label for="resp3" id="opcion3"></label>
-          </div>
-
-            <!-- <input type="text" id="respuesta" autocomplete="off" > -->
-            <input type="submit" value="Responder">
-        </form> 
-
+        
         <form action="" id="formContestacion1">
             <p id="contestacion1"></p>
             <input type="submit" value="Siguiente">
