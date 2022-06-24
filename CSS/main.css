@@ -3,7 +3,6 @@
   grid-template-rows: 3fr 6fr 1fr;
   grid-template-columns: 55% 45%;
   grid-template-areas: "header header"  "main video"  "footer footer";
-  background-color: beige;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -30,14 +29,42 @@
     background-color: antiquewhite;
     display: flex;
     flex-direction: column;
-    justify-content: center; }
+    justify-content: center;
+    align-content: center;
+    align-items: center; }
+    .contenedor main #boxJugar {
+      display: flex;
+      flex-direction: column;
+      justify-content: center; }
     .contenedor main #listaPersonajes {
       text-align: center; }
     .contenedor main #resultadoJuego {
       text-align: center; }
+    .contenedor main #formulario {
+      display: none; }
+    .contenedor main #divSaludo {
+      border: black 2px solid;
+      display: none; }
+      .contenedor main #divSaludo #btnNombre {
+        font-size: 20px; }
+    .contenedor main #divExplicacion1 {
+      display: none; }
+    .contenedor main #formJuego {
+      display: none; }
+    .contenedor main #formContestacion1 {
+      display: none; }
+    .contenedor main #divResultado {
+      display: none; }
   .contenedor .video {
     grid-area: video;
-    background-color: beige; }
+    /* background-image: url('../img/introduccion.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+             */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
   .contenedor footer {
     grid-area: footer;
     background-color: gray; }

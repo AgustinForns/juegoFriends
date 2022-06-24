@@ -24,18 +24,42 @@
 
     <main>
       
-        <div class="boxJugar">
+        <div id="boxJugar">
             <h3>Animaté y descubre que tanto sabes de la imperdible serie Friends</h3>
-            <button>Juega ahora!</button>
+            <button id="btnJugar">Juega ahora!</button>
             <p id="listaPersonajes"></p>
         </div>
-        <div id="resultadoJuego" class="resultadoJuego">
+        <form action="" id="divExplicacion1">
+            <p id="explicacion1"></p>
+            <input type="submit" value="Entiendo">
+        </form>
+        
 
+        <div id="divResultado">
+            <p id="resultado"></p>
         </div>
+
+        <form action="" id="divSaludo">
+            <p id="textSaludo">Dinos tu nombre:</p>
+            <input type="text" id="nombre" autocomplete="off">
+            <input type="submit" value="Enviar">
+        </form>
+        
+        <form action="" id="formJuego">
+            <p id="pregunta"></p>
+            <input type="text" id="respuesta" autocomplete="off" >
+            <input type="submit" value="Responder">
+        </form> 
+
+        <form action="" id="formContestacion1">
+            <p id="contestacion1"></p>
+            <input type="submit" value="Siguiente">
+        </form>
         
     </main>
 
     <section class="video">
+        <p>Conoces a todos los personajes?</p>
         <div>
             <img src="img/introduccion.jpg" alt="">
         </div>

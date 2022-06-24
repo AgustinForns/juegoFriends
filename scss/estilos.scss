@@ -9,7 +9,7 @@
     grid-template-areas: "header header" 
                         "main video" 
                         "footer footer";
-    background-color: beige;
+    
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -49,6 +49,19 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-content: center;
+        align-items: center;
+
+        #boxJugar{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            #btnJugar{
+                
+            }
+
+        }
 
         #listaPersonajes{
             text-align: center;
@@ -59,13 +72,50 @@
          
         }
 
+        #formulario{
+          display: none;
+        }
+
+        #divSaludo{
+            border: black 2px solid;
+            display: none;
+
+            #btnNombre{
+                font-size: 20px;
+            }
+        }
+
+        #divExplicacion1{
+            display: none;
+        }
+
+        #formJuego{
+            display: none;
+        }
+
+        #formContestacion1{
+            display: none;
+        }
+
+        #divResultado{
+            display: none;
+        }
+
      
         
     }
 
     .video{
         grid-area: video;
-        background-color: beige;
+        /* background-image: url('../img/introduccion.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+             */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
     }    
     footer{
         grid-area: footer;
