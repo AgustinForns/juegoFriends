@@ -1,0 +1,24 @@
+@mixin flexCenter{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+
+@mixin botones{
+    font-size: 2rem;
+    background-color: $colorBtn;
+    border-radius: 0.7rem;
+    padding: 0.5rem;
+}
+
+
+@mixin inputs{
+    font-size: 2rem;
+}
+
+@mixin textos{
+    font-size: 2rem;
+}

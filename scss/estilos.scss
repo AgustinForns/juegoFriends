@@ -1,6 +1,5 @@
-
-
-
+@import "scss/variables.scss";
+@import "scss/extensiones.scss";
 
 .contenedor{
     display: grid;
@@ -14,6 +13,7 @@
     margin: 0;
     box-sizing: border-box;
     height: 100vh;
+    font-family: 'Roboto', sans-serif; 
    
 
     header{
@@ -51,65 +51,96 @@
         justify-content: center;
         align-content: center;
         align-items: center;
+        font-size: 2rem;
 
-        #boxJugar{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+
+        //INICIO DEL JUEGO
+        .divJugar{
+            @include flexCenter;
+            margin: 2rem;
+            
 
             #btnJugar{
-                
+                width:fit-content;
+                margin-top: 2rem;
+                @include botones;               
             }
-
         }
 
-        #listaPersonajes{
-            text-align: center;
-        }
-
-        #resultadoJuego{
-           text-align: center;
-         
-        }
-
-        #formulario{
-          display: none;
-        }
-
-        #divSaludo{
+        //INGRESAR NOMBRE
+        .divSaludo{
+            @include flexCenter;
             border: black 2px solid;
-            display: none;
+            padding: 10px;
+            
 
-            #btnNombre{
-                font-size: 20px;
+            #nombre{
+                @include inputs;
+            }
+
+            #btnSaludo{
+                margin-top: 2rem;
+                @include botones;
             }
         }
 
-        #divExplicacion1{
+        //EXPLICACION JUEGOS
+        .divExplicacion1{
+            @include flexCenter;
+            margin: 2rem;
+
+            #btnExplicacion1{
+                @include botones;
+            }       
+        }
+
+        //CONTESTACION JUEGOS
+        .formContestacion1{
+            @include flexCenter;
+            margin: 2rem;
+
+            #btnContestacion1{
+                @include botones;
+            }
+
+        }
+
+        //JUEGO 1
+        .formJuego{
+            @include flexCenter;
+            #btnRJ1{
+                @include botones;
+                margin-top: 2rem;
+            }
+
+        }
+
+        //JUEGO 2
+        .divJuego2{
+            @include flexCenter;
+            
+            #btnRJ2{
+                @include botones;
+                margin-top: 2rem;
+            }
+
+            #respJ2{
+                font-size: 2rem;
+            }
+        }      
+
+        //RESULTADO FINAL DEL JUEGO
+        .divResultado{
+            @include flexCenter;
+            margin: 2rem;
+        }
+
+        .hide{
             display: none;
         }
 
-        #formJuego{
-            display: none;
-        }
+        
 
-        #formContestacion1{
-            display: none;
-        }
-
-        #divResultado{
-            display: none;
-        }
-
-        #divPreguntas{
-            display: none;
-        }
-
-        #divJuego2{
-            display: none;
-        }
-
-     
         
     }
 

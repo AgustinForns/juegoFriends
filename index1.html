@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego Friends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/main.css">
 </head>
 <body class="contenedor">
@@ -23,68 +24,63 @@
     </header>
 
     <main>
-
-        <form action="" id="formJuego">
-            <p id="pregunta"></p>
-           <div>
-             <input type="radio" name="opcion" value="respuesta1" id="resp1">
-             <label for="resp1" id="opcion1"></label>
-           </div>
-           <div>
-            <input type="radio" name="opcion" value="respuesta2" id="resp2">
-            <label for="resp2" id="opcion2"></label>
-          </div>
-          <div>
-            <input type="radio" name="opcion" value="respuesta3" id="resp3">
-            <label for="resp3" id="opcion3"></label>
-          </div>
-            <input type="submit" value="Responder">
-        </form> 
-
-        <div id="divJuego2">
-            <p id="pregJ2"></p>
-            <input id="respJ2" type="text" autocomplete="off">
-            <button id="btnJ2">Responder</button>
-        </div>
-      
-        <div id="boxJugar">
+        
+        <!-- INICIO DEL JUEGO -->
+        <div id="divJugar" class="divJugar">
             <h3>Animaté y descubre que tanto sabes de la imperdible serie Friends</h3>
             <button id="btnJugar">Juega ahora!</button>
-            <p id="listaPersonajes"></p>
         </div>
-        <form action="" id="divExplicacion1">
-            <p id="explicacion1"></p>
-            <input type="submit" value="Entiendo">
-        </form>
-        
 
-        <div id="divResultado">
+        <!-- INGRESAR NOMBRE -->
+        <form action="" id="divSaludo" class="divSaludo">
+            <p id="textSaludo">Dinos tu nombre:</p>
+            <input type="text" id="nombre" class="inputs" autocomplete="off">
+            <input  id="btnSaludo" class="botones" type="submit" value="Enviar">
+        </form>
+
+        <!-- EXPLICACION JUEGOS -->
+        <form action="" id="divExplicacion1" class="divExplicacion1">
+            <p id="explicacion1"></p>
+            <input id="btnExplicacion1" class="botones" type="submit" value="Entiendo">
+        </form>
+
+        <!-- CONTESTACION EN JUEGOS -->
+        <form action="" id="formContestacion1" class="formContestacion1">
+            <p id="contestacion1"></p>
+            <input id="btnContestacion1" type="submit" class="botones" value="Siguiente">
+        </form>
+
+        <!-- JUEGO 1 -->    
+        <form action="" id="formJuego" class="formJuego">
+            <p id="pregunta"></p>
+          <div>
+              <div>
+                  <input type="radio" name="opcion" value="respuesta1" id="resp1">
+                  <label for="resp1" id="opcion1"></label>
+              </div>
+              <div>
+                  <input type="radio" name="opcion" value="respuesta2" id="resp2">
+                  <label for="resp2" id="opcion2"></label>
+              </div>
+              <div>
+                  <input type="radio" name="opcion" value="respuesta3" id="resp3">
+                  <label for="resp3" id="opcion3"></label>
+          </div>
+            </div>
+            <input id="btnRJ1" class="botones" type="submit" value="Responder">
+        </form> 
+
+        <!-- JUEGO 2 -->
+        <div id="divJuego2" class="divJuego2">
+            <p id="pregJ2" class="preguntas"></p>
+            <input id="respJ2" class="inputs" type="text" autocomplete="off">
+            <button id="btnRJ2" class="botones">Responder</button>
+        </div>
+      
+        <!-- RESULTADO FINAL DEL JUEGO -->
+        <div id="divResultado" class="divResultado">
             <p id="resultado"></p>
         </div>
-
-        <form action="" id="divSaludo">
-            <p id="textSaludo">Dinos tu nombre:</p>
-            <input type="text" id="nombre" autocomplete="off">
-            <input type="submit" value="Enviar">
-        </form>
-
-        <div id="divPreguntas">
-            <div id="pregunta">Question</div>
-            <div id="opciones">
-                <button id="btn1">Answer 1</button>
-                <button id="btn2">Answer 2</button>
-                <button id="btn3">Answer 3</button>
-            </div>
-            <div>
-                <button id="siguiente">Siguiente</button>
-            </div>
-        </div>
-        
-        
-        <form action="" id="formContestacion1">
-            <p id="contestacion1"></p>
-            <input type="submit" value="Siguiente">
-        </form>
         
     </main>
 

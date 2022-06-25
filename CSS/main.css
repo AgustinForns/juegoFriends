@@ -6,7 +6,8 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  height: 100vh; }
+  height: 100vh;
+  font-family: 'Roboto', sans-serif; }
   .contenedor header {
     grid-area: header;
     background-color: #d8c6c6;
@@ -31,33 +32,96 @@
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    align-items: center; }
-    .contenedor main #boxJugar {
+    align-items: center;
+    font-size: 2rem; }
+    .contenedor main .divJugar {
       display: flex;
       flex-direction: column;
-      justify-content: center; }
-    .contenedor main #listaPersonajes {
-      text-align: center; }
-    .contenedor main #resultadoJuego {
-      text-align: center; }
-    .contenedor main #formulario {
-      display: none; }
-    .contenedor main #divSaludo {
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      margin: 2rem; }
+      .contenedor main .divJugar #btnJugar {
+        width: fit-content;
+        margin-top: 2rem;
+        font-size: 2rem;
+        background-color: #ce8383;
+        border-radius: 0.7rem;
+        padding: 0.5rem; }
+    .contenedor main .divSaludo {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
       border: black 2px solid;
-      display: none; }
-      .contenedor main #divSaludo #btnNombre {
-        font-size: 20px; }
-    .contenedor main #divExplicacion1 {
-      display: none; }
-    .contenedor main #formJuego {
-      display: none; }
-    .contenedor main #formContestacion1 {
-      display: none; }
-    .contenedor main #divResultado {
-      display: none; }
-    .contenedor main #divPreguntas {
-      display: none; }
-    .contenedor main #divJuego2 {
+      padding: 10px; }
+      .contenedor main .divSaludo #nombre {
+        font-size: 2rem; }
+      .contenedor main .divSaludo #btnSaludo {
+        margin-top: 2rem;
+        font-size: 2rem;
+        background-color: #ce8383;
+        border-radius: 0.7rem;
+        padding: 0.5rem; }
+    .contenedor main .divExplicacion1 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      margin: 2rem; }
+      .contenedor main .divExplicacion1 #btnExplicacion1 {
+        font-size: 2rem;
+        background-color: #ce8383;
+        border-radius: 0.7rem;
+        padding: 0.5rem; }
+    .contenedor main .formContestacion1 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      margin: 2rem; }
+      .contenedor main .formContestacion1 #btnContestacion1 {
+        font-size: 2rem;
+        background-color: #ce8383;
+        border-radius: 0.7rem;
+        padding: 0.5rem; }
+    .contenedor main .formJuego {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem; }
+      .contenedor main .formJuego #btnRJ1 {
+        font-size: 2rem;
+        background-color: #ce8383;
+        border-radius: 0.7rem;
+        padding: 0.5rem;
+        margin-top: 2rem; }
+    .contenedor main .divJuego2 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem; }
+      .contenedor main .divJuego2 #btnRJ2 {
+        font-size: 2rem;
+        background-color: #ce8383;
+        border-radius: 0.7rem;
+        padding: 0.5rem;
+        margin-top: 2rem; }
+      .contenedor main .divJuego2 #respJ2 {
+        font-size: 2rem; }
+    .contenedor main .divResultado {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      margin: 2rem; }
+    .contenedor main .hide {
       display: none; }
   .contenedor .video {
     grid-area: video;

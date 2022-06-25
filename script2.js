@@ -4,7 +4,7 @@ const divSaludo = document.getElementById("divSaludo");
 const elementoNombre = document.getElementById("nombre")
 
 const btnJugar = document.getElementById("btnJugar");
-const divJugar = document.getElementById("boxJugar");
+const divJugar = document.getElementById("divJugar");
 
 const divExplicacion1 = document.getElementById("divExplicacion1");
 const explicacion1 = document.getElementById("explicacion1");
@@ -27,7 +27,7 @@ const resultado = document.getElementById("resultado");
 
 const divJuego2 = document.getElementById("divJuego2");
 const respJ2 = document.getElementById("respJ2");
-const btnJ2 = document.getElementById("btnJ2");
+const btnRJ2 = document.getElementById("btnRJ2");
 const pregJ2 = document.getElementById("pregJ2");
 
  
@@ -87,30 +87,45 @@ const preguntasRespuestas = [
 
 //PREGUNTAS MEZCLADAS
 
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+const preguntasRespuestasMix = preguntasRespuestas.sort(() => Math.random() - 0.5);
+console.log(preguntasRespuestasMix)
 
-    // Mientras queden elementos a mezclar...
-    while (0 !== currentIndex) {
 
-        // Seleccionar un elemento sin mezclar...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
 
-        // E intercambiarlo con el elemento actual
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
 
-    return array;
+
+//FUNCIONES PARA MOSTRAR O ESCONDER CONTENEDORES
+
+const esconder = (contenedor) => {
+    contenedor.className = "hide";
+}
+
+const mostrar = (contenedor) => {
+    contenedor.className = `${toString.contenedor}`;
 }
 
 
-const preguntasRespuestasMix = preguntasRespuestas.sort(() => Math.random() - 0.5);
+//VISULIZACION INICIAL DE LOS CONTENEDORES
+
+divJugar.className ="divJugar";
+divSaludo.className = "hide";
+divExplicacion1.className ="hide" ;
+formContestacion1.className = "hide";
+formJuego.className = "hide";
+divJuego2.className = "hide";
+divResultado.className = "hide";
+
+/* 
+mostrar(divJugar);
+esconder(divSaludo);
+esconder(divExplicacion1);
+esconder(formContestacion1);
+esconder(formJuego);
+esconder(divJuego2);
+esconder(divResultado);
+ */
 
 
-console.log(preguntasRespuestasMix)
 
 
 
@@ -119,18 +134,18 @@ console.log(preguntasRespuestasMix)
 const inicioJuego = () => {
     nombreParticipante();
 }
-
 btnJugar.addEventListener("click", inicioJuego);
+
+
 //1. SE PIDE EL NOMBRE AL PARTICIPANTE
 
 const nombreParticipante = () => {
-    divJugar.style.display = "none";
-    divSaludo.style.display = `block`;
-
+    divJugar.className = "hide";
+    divSaludo.className = "divSaludo";
     divSaludo.addEventListener(`submit`, (e) => {
         e.preventDefault();
         let nombre = elementoNombre.value;
-        divSaludo.style.display = "none";
+        divSaludo.className = "hide";
         primerJuego(nombre);
 
     })
@@ -140,12 +155,12 @@ const nombreParticipante = () => {
 //2. EMPIEZA EL PRIMER JUEGO
 
 const primerJuego = (nombre) => {
-    divExplicacion1.style.display = "block";
+    divExplicacion1.className = "divExplicacion1"
     explicacion1.innerText = `Hola ${nombre}. Tendras que contestar 4 preguntas. Si contestas correctamente tres o mas pasas a la segunda parte del juego.`;
 
     divExplicacion1.addEventListener("submit", (e) => {
         e.preventDefault();
-        divExplicacion1.style.display = "none";
+        divExplicacion1.className = "hide";
         let correctas = 0;
         let incorrectas = 0;
         let index = 0;
@@ -162,8 +177,8 @@ const preguntas = (corr, incorr, index) => {
     if (index < 5) {
         index++
         let opciones = [];
-        formContestacion1.style.display = "none";
-        formJuego.style.display = `block`;
+        formContestacion1.className = "hide";
+        formJuego.className = `formJuego`;
         pregunta.innerText = preguntasRespuestasMix[index].pregunta;
         opcion1.innerText = preguntasRespuestasMix[index].opciones[0].resp;
         opcion2.innerText = preguntasRespuestasMix[index].opciones[1].resp;
@@ -193,14 +208,14 @@ const preguntas = (corr, incorr, index) => {
 
             if (opcionElegida == (preguntasRespuestasMix[index].respCorr)) {
 
-                formJuego.style.display = "none";
-                formContestacion1.style.display = "block";
+                formJuego.className = "hide";
+                formContestacion1.className = "formContestacion1";
                 contestacion1.innerText = "Correcto!!";
                 corr++;
             }
             else {
-                formJuego.style.display = "none";
-                formContestacion1.style.display = "block";
+                formJuego.className = "hide";
+                formContestacion1.className = "formContestacion1";
                 contestacion1.innerText = `Incorrecto. La respuesta es ${(preguntasRespuestasMix[index].respCorr).toUpperCase()}`;
                 incorr++;
 
@@ -227,18 +242,18 @@ const preguntas = (corr, incorr, index) => {
 //SEGUN EL RESULTADO EN EL JUEGO 1 PIERDO O PASO AL JUEGO 2
 const resumenJuego1 = (corr, incorr) => {
     console.log(corr)
-    divResultado.style.display = "none";
-    formJuego.style.display = "none";
-    formContestacion1.style.display = "block";
+    divResultado.className = "hide";
+    formJuego.className = "hide";
+    formContestacion1.className = "formContestacion1";
     contestacion1.innerText = `Como resultado obtuviste ${corr} respuestas correctas y ${incorr} respuestas incorrectas`
     formContestacion1.addEventListener("submit", (e) => {
         e.preventDefault();
         if (corr > 2) {
-            formContestacion1.style.display = "none";
+            formContestacion1.className = "hide";
             segundoJuego();
         } else {
-            formContestacion1.style.display = "none";
-            divResultado.style.display = "block";
+            formContestacion1.className = "hide";
+            divResultado.className = "divResultado";
             resultado.innerText = "Fin del juego";
         }
     })
@@ -251,44 +266,44 @@ const resumenJuego1 = (corr, incorr) => {
 //SEGUNDO JUEGO
 
 const segundoJuego = () => {
-    divExplicacion1.style.display = "block";
-    divResultado.style.display = "none";
-    formContestacion1.style.display = "none";
+    divExplicacion1.className = "divExplicacion1";
+    divResultado.className = "hide";
+    formContestacion1.className = "hide";
     explicacion1.innerText = "Vamos a ver si te sabes algun nombre. Tienes que dar un nombre y apellido sin equivocarte."
     divExplicacion1.addEventListener("submit", (e) => {
         e.preventDefault();
-        divExplicacion1.style.display = "none";
-        formJuego.style.display = "none";
-        divJuego2.style.display = "block";
+        divExplicacion1.className = "hide";
+        formJuego.className = "hide";
+        divJuego2.className = "divJuego2";
         pregJ2.innerText = "Di primero un nombre:"
-        btnJ2.addEventListener("click", () => {
+        btnRJ2.addEventListener("click", () => {
             let nom = respJ2.value;
             if ((datosPersonajes.some(id => id.nombre === nom.toLowerCase())) === true) {
-                formJuego.style.display = "none";
-                divJuego2.style.display = "none";
-                formContestacion1.style.display = "block"
+                formJuego.className = "hide";
+                divJuego2.className = "hide";
+                formContestacion1.className = "formContestacion1"
                 contestacion1.innerText =`Es correcto! Un personaje se llama ${nom}.`
                 formContestacion1.addEventListener("submit", (e) => {
                     e.preventDefault();
-                    divExplicacion1.style.display = "none";
-                    formContestacion1.style.display = "none";
-                    formJuego.style.display = "none";;
-                    divJuego2.style.display = "block";
+                    divExplicacion1.className = "hide";
+                    formContestacion1.className = "hide";
+                    formJuego.className = "hide";
+                    divJuego2.className = "divJuego2";
                     pregJ2.innerText = `Ahora di el apellido de ${nom}`;
-                    btnJ2.addEventListener("click", () => {
+                    btnRJ2.addEventListener("click", () => {
                         let apell = respJ2.value;
                         if ((datosPersonajes.find((id) => id.nombre === nom)).apellido === apell) {
-                            formJuego.style.display = "none";
-                            formContestacion1.style.display = "none";
-                            divJuego2.style.display = "none";
-                            divResultado.style.display = "block";
+                            formJuego.className = "hide";
+                            formContestacion1.className = "hide";
+                            divJuego2.className = "hide";
+                            divResultado.className = "divResultado";
                             resultado.innerText = `Es correcto! El nombre y apellido del personaje es ${nom} ${apell}
                             Ganaste la segunda parte del juego`
                         } else {
-                            formJuego.style.display = "none"
-                            formContestacion1.style.display = "none";
-                            divJuego2.style.display = "none";
-                            divResultado.style.display = "block";
+                            formJuego.className = "hide"
+                            formContestacion1.className = "hide";
+                            divJuego2.className = "hide";
+                            divResultado.className = "block";
                             resultado.innerText = `Incorrecto. El nombre y apellido del personaje es ${nom} ${(datosPersonajes.find(id => id.nombre === nom)).apellido}. Fin del juego`;       
                             
                         }                       
@@ -296,10 +311,10 @@ const segundoJuego = () => {
                     })
                 })
             } else { 
-                formContestacion1.style.display = "none";
-                formJuego.style.display = "none";
-                divJuego2.style.display = "none";
-                divResultado.style.display = "block";
+                formContestacion1.className = "hide";
+                formJuego.className = "hide";
+                divJuego2.className = "hide";
+                divResultado.className = "divResultado";
                 resultado.innerText = `Incorrecto. El nombre que ingresaste no pertenece a ningun personaje. Perdiste la segunda parte del juego.` ;                   
                        
                 
