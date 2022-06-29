@@ -1,6 +1,5 @@
-
-
-
+@import "scss/variables.scss";
+@import "scss/extensiones.scss";
 
 .contenedor{
     display: grid;
@@ -9,11 +8,12 @@
     grid-template-areas: "header header" 
                         "main video" 
                         "footer footer";
-    background-color: beige;
+    
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     height: 100vh;
+    font-family: 'Roboto', sans-serif; 
    
 
     header{
@@ -21,8 +21,7 @@
         background-color: rgb(216, 198, 198);
         display: flex;
         flex-direction: column;
-        align-items: center;
-        
+        align-items: center;        
 
         nav{
             ul{
@@ -49,23 +48,112 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-content: center;
+        align-items: center;
+        font-size: 2rem;
 
-        #listaPersonajes{
-            text-align: center;
+
+        //INICIO DEL JUEGO
+        .divJugar{
+            @include flexCenter;
+            margin: 2rem;
+            
+
+            #btnJugar{
+                width:fit-content;
+                margin-top: 2rem;
+                @include botones;               
+            }
         }
 
-        #resultadoJuego{
-           text-align: center;
-         
+        //INGRESAR NOMBRE
+        .divSaludo{
+            @include flexCenter;
+            border: black 2px solid;
+            padding: 10px;
+            
+
+            #nombre{
+                @include inputs;
+            }
+
+            #btnSaludo{
+                margin-top: 2rem;
+                @include botones;
+            }
         }
 
-     
+        //EXPLICACION JUEGOS
+        .divExplicacion1{
+            @include flexCenter;
+            margin: 2rem;
+
+            #btnExplicacion1{
+                @include botones;
+            }       
+        }
+
+        //CONTESTACION JUEGOS
+        .formContestacion1{
+            @include flexCenter;
+            margin: 2rem;
+
+            #btnContestacion1{
+                @include botones;
+            }
+
+        }
+
+        //JUEGO 1
+        .formJuego{
+            @include flexCenter;
+            #btnRJ1{
+                @include botones;
+                margin-top: 2rem;
+            }
+
+        }
+
+        //JUEGO 2
+        .divJuego2{
+            @include flexCenter;
+            
+            #btnRJ2{
+                @include botones;
+                margin-top: 2rem;
+            }
+
+            #respJ2{
+                font-size: 2rem;
+            }
+        }      
+
+        //RESULTADO FINAL DEL JUEGO
+        .divResultado{
+            @include flexCenter;
+            margin: 2rem;
+        }
+
+        .hide{
+            display: none;
+        }
+
+        
+
         
     }
 
     .video{
         grid-area: video;
-        background-color: beige;
+        /* background-image: url('../img/introduccion.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+             */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
     }    
     footer{
         grid-area: footer;
