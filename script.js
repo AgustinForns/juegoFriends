@@ -443,20 +443,6 @@ const preguntas = (corr, incorr, index) => {
         opciones = [resp1, resp2, resp3];
 
 
-    /*     pregunta.innerText = preguntasRespuestasMix[index].pregunta;
-        opcion1.innerText = preguntasRespuestasMix[index].opciones[0].resp;
-        opcion2.innerText = preguntasRespuestasMix[index].opciones[1].resp;
-        opcion3.innerText = preguntasRespuestasMix[index].opciones[2].resp;
-        resp1.value = preguntasRespuestasMix[index].opciones[0].resp;
-        resp2.value = preguntasRespuestasMix[index].opciones[1].resp;
-        resp3.value = preguntasRespuestasMix[index].opciones[2].resp;
-        resp1.checked  = false;
-        resp2.checked  = false;
-        resp3.checked  = false;
-        opciones = [resp1, resp2, resp3];
- */
-        /* console.log(opciones);
-        console.log(index) */
 
         formJuego.addEventListener("submit", (e) => {
             e.preventDefault();
