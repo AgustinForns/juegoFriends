@@ -31,6 +31,8 @@ const respJ2 = document.getElementById("respJ2");
 const btnRJ2 = document.getElementById("btnRJ2");
 const pregJ2 = document.getElementById("pregJ2");
 
+const divMostrarPersonajes = document.getElementById("divMostrarPersonajes");
+
 
 /* class Contenedor {
     esconder(contenedor){
@@ -241,12 +243,12 @@ class PrimerJuego {
 
  
 const datosPersonajes = [
-    { id: 1, nombre: "rachel", apellido: "green" },
-    { id: 2, nombre: "ross", apellido: "geller" },
-    { id: 3, nombre: "phoebe", apellido: "buffay" },
-    { id: 4, nombre: "chandler", apellido: "bing" },
-    { id: 5, nombre: "monica", apellido: "geller" },
-    { id: 6, nombre: "joey", apellido: "tribbiani" },
+    { id: 1, nombre: "Rachel", apellido: "Green" },
+    { id: 2, nombre: "Ross", apellido: "Geller" },
+    { id: 3, nombre: "Phoebe", apellido: "Buffay" },
+    { id: 4, nombre: "Chandler", apellido: "Bing" },
+    { id: 5, nombre: "Monica", apellido: "Geller" },
+    { id: 6, nombre: "Joey", apellido: "Tribbiani" },
 ];
 
 const preguntasRespuestas = [
@@ -353,6 +355,7 @@ formContestacion1.className = "hide";
 formJuego.className = "hide";
 divJuego2.className = "hide";
 divResultado.className = "hide"; 
+divMostrarPersonajes.className = "hide";
 
 
 
@@ -424,7 +427,23 @@ const preguntas = (corr, incorr, index) => {
         let opciones = [];
         formContestacion1.className = "hide";
         formJuego.className = `formJuego`;
-        pregunta.innerText = preguntasRespuestasMix[index].pregunta;
+
+
+        const {pregunta: textPregunta, opciones: elecciones} = preguntasRespuestasMix[index];
+        pregunta.innerText = textPregunta;
+        opcion1.innerText = elecciones[0].resp;
+        opcion2.innerText = elecciones[1].resp;
+        opcion3.innerText = elecciones[2].resp;
+        resp1.value = elecciones[0].resp;
+        resp2.value = elecciones[1].resp;
+        resp3.value = elecciones[2].resp;
+        resp1.checked  = false;
+        resp2.checked  = false;
+        resp3.checked  = false;
+        opciones = [resp1, resp2, resp3];
+
+
+    /*     pregunta.innerText = preguntasRespuestasMix[index].pregunta;
         opcion1.innerText = preguntasRespuestasMix[index].opciones[0].resp;
         opcion2.innerText = preguntasRespuestasMix[index].opciones[1].resp;
         opcion3.innerText = preguntasRespuestasMix[index].opciones[2].resp;
@@ -435,7 +454,7 @@ const preguntas = (corr, incorr, index) => {
         resp2.checked  = false;
         resp3.checked  = false;
         opciones = [resp1, resp2, resp3];
-
+ */
         /* console.log(opciones);
         console.log(index) */
 
@@ -499,6 +518,7 @@ const resumenJuego1 = (corr, incorr) => {
             formContestacion1.className = "hide";
             divResultado.className = "divResultado";
             resultado.innerText = "Fin del juego";
+            mostrarPersonajes();
         }
     })
 
@@ -522,7 +542,7 @@ const segundoJuego = () => {
         pregJ2.innerText = "Di primero un nombre:"
         btnRJ2.addEventListener("click", () => {
             let nom = respJ2.value;
-            if ((datosPersonajes.some(id => id.nombre === nom.toLowerCase())) === true) {
+            if ((datosPersonajes.some(id => id.nombre.toLowerCase() === nom.toLowerCase())) === true) {
                 formJuego.className = "hide";
                 divJuego2.className = "hide";
                 formContestacion1.className = "formContestacion1"
@@ -536,21 +556,22 @@ const segundoJuego = () => {
                     divJuego2.className = "divJuego2";
                     pregJ2.innerText = `Ahora di el apellido de ${nom}`;
                     btnRJ2.addEventListener("click", () => {
-                        let apell = respJ2.value;
-                        if ((datosPersonajes.find((id) => id.nombre === nom)).apellido === apell) {
+                        let apell = respJ2.value.toLowerCase();
+                        if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
                             formJuego.className = "hide";
                             formContestacion1.className = "hide";
                             divJuego2.className = "hide";
                             divResultado.className = "divResultado";
                             resultado.innerText = `Es correcto! El nombre y apellido del personaje es ${nom} ${apell}
                             Ganaste la segunda parte del juego`
+                           
                         } else {
                             formJuego.className = "hide"
                             formContestacion1.className = "hide";
                             divJuego2.className = "hide";
-                            divResultado.className = "block";
-                            resultado.innerText = `Incorrecto. El nombre y apellido del personaje es ${nom} ${(datosPersonajes.find(id => id.nombre === nom)).apellido}. Fin del juego`;       
-                            
+                            divResultado.className = "divResultado";
+                            resultado.innerText = `Incorrecto. El nombre y apellido del personaje es ${nom} ${(datosPersonajes.find(id => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}. Fin del juego`;       
+                            mostrarPersonajes();
                         }                       
                   
                     })
@@ -560,10 +581,30 @@ const segundoJuego = () => {
                 formJuego.className = "hide";
                 divJuego2.className = "hide";
                 divResultado.className = "divResultado";
-                resultado.innerText = `Incorrecto. El nombre que ingresaste no pertenece a ningun personaje. Perdiste la segunda parte del juego.` ;                   
+                resultado.innerText = `Incorrecto. El nombre que ingresaste no pertenece a ningun personaje. Perdiste la segunda parte del juego.` ; 
+                mostrarPersonajes();
                        
                 
             }   
         })
     })
 } 
+
+
+
+//MOSTRAR PERSONAJES
+
+const mostrarPersonajes = () => {
+    let titulo = document.createElement("h3");
+    titulo.innerText = "La lista de personajes es:"
+    divMostrarPersonajes.className = "divMostrarPersonajes";
+    divMostrarPersonajes.append(titulo);
+    for ( const datosPersonaje of datosPersonajes) {
+        const {nombre, apellido} = datosPersonaje;
+        let personaje = document.createElement("h5");
+        personaje.innerText = `--- ${nombre} ${apellido}`
+        divMostrarPersonajes.append(personaje);
+
+    }
+
+}

@@ -114,6 +114,14 @@
         margin-top: 2rem; }
       .contenedor main .divJuego2 #respJ2 {
         font-size: 2rem; }
+    .contenedor main .divMostrarPersonajes {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem; }
+      .contenedor main .divMostrarPersonajes h5 {
+        margin: 0.1rem; }
     .contenedor main .divResultado {
       display: flex;
       flex-direction: column;

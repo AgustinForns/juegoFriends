@@ -126,7 +126,17 @@
             #respJ2{
                 font-size: 2rem;
             }
-        }      
+        }
+        
+        //MOSTRAR PERSONAJES
+
+        .divMostrarPersonajes{
+            @include flexCenter;
+
+            h5{
+                margin: 0.1rem;
+            }
+        }
 
         //RESULTADO FINAL DEL JUEGO
         .divResultado{
