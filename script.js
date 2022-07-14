@@ -675,8 +675,8 @@ const segundoJuego = () => {
 
 
 //MOSTRAR PERSONAJES
-
-/* const mostrarPersonajes = () => {
+/* 
+const mostrarPersonajes = () => {
     let titulo = document.createElement("h3");
     titulo.innerText = "La lista de personajes es:"
     divMostrarPersonajes.className = "divMostrarPersonajes";
@@ -688,4 +688,5 @@ const segundoJuego = () => {
         divMostrarPersonajes.append(personaje);
 
     }
+
  */
