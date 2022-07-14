@@ -547,6 +547,88 @@ const segundoJuego = () => {
                 divJuego2.className = "hide";
                 formContestacion1.className = "formContestacion1"
                 contestacion1.innerText =`Es correcto! Un personaje se llama ${nom}.`
+
+                /* formContestacion1.className = "formContestacion1"
+                contestacion1.innerText =`Es correcto! Un personaje se llama ${nom}.` */
+                Swal.fire({
+                    title: 'Correcto!',
+                    text: `Un personaje se llama ${nom.toUpperCase()}.`,
+                    icon: 'success',
+                    confirmButtonText: 'Siguiente',
+                    color: "gray",
+                   
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        divExplicacion1.className = "hide";
+                        formContestacion1.className = "hide";
+                        formJuego.className = "hide";
+                        divJuego2.className = "divJuego2";
+                        pregJ2.innerText = `Ahora di el apellido de ${nom}`;
+
+                        btnRJ2.addEventListener("click", () => {
+                            let apell = respJ2.value.toLowerCase();
+                            if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
+                                formJuego.className = "hide";
+                                formContestacion1.className = "hide";
+                                divJuego2.className = "hide";
+                                /* divResultado.className = "divResultado";
+                                resultado.innerText = `Es correcto! El nombre y apellido del personaje es ${nom} ${apell}
+                                Ganaste la segunda parte del juego` */
+
+                                Swal.fire({
+                                    title: 'Ganaste!!',
+                                    text: `Es correcto! El nombre y apellido del personaje es ${nom} ${apell}
+                                    Ganaste la segunda parte del juego`,
+                                    icon: 'success',
+                                    confirmButtonText: 'Fin de Juego',
+                                    color: "gray",
+                                   
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        mostrarPersonajes();
+                                    }
+                                })
+
+                               
+                            } else {
+                                formJuego.className = "hide"
+                                formContestacion1.className = "hide";
+                                divJuego2.className = "hide";
+                                /* divResultado.className = "divResultado";
+                                resultado.innerText = `Incorrecto. El nombre y apellido del personaje es ${nom} ${(datosPersonajes.find(id => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}. Fin del juego`;       
+                                mostrarPersonajes(); */
+
+                                Swal.fire({
+                                    title: 'Ups... Perdiste!',
+                                    text: `El nombre y apellido del personaje es ${nom} ${(datosPersonajes.find(id => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}`,
+                                    icon: 'warning',
+                                    confirmButtonText: 'Fin de Juego',
+                                    color: "gray",
+                                   
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        mostrarPersonajes();
+                                    }
+                                })
+
+
+                            }                       
+                      
+                        })
+                        
+                    }
+                
+                })
+            
+            }
+        })
+    })
+}      
+    
+
+
+/* 
+
                 formContestacion1.addEventListener("submit", (e) => {
                     e.preventDefault();
                     
@@ -594,7 +676,7 @@ const segundoJuego = () => {
 
 //MOSTRAR PERSONAJES
 
-const mostrarPersonajes = () => {
+/* const mostrarPersonajes = () => {
     let titulo = document.createElement("h3");
     titulo.innerText = "La lista de personajes es:"
     divMostrarPersonajes.className = "divMostrarPersonajes";
@@ -606,5 +688,4 @@ const mostrarPersonajes = () => {
         divMostrarPersonajes.append(personaje);
 
     }
-
-}
+ */
