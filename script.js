@@ -1,5 +1,6 @@
 
 
+
 const divSaludo = document.getElementById("divSaludo");
 const elementoNombre = document.getElementById("nombre");
 const textSaludo = document.getElementById("textSaludo");
@@ -32,6 +33,9 @@ const btnRJ2 = document.getElementById("btnRJ2");
 const pregJ2 = document.getElementById("pregJ2");
 
 const divMostrarPersonajes = document.getElementById("divMostrarPersonajes");
+
+ const URLpreguntasYrespuetsas = "/preguntasYrespuestas.json"
+/*  const preguntasRespuestasMix = mezclarPreguntas(); */
 
 
 /* class Contenedor {
@@ -251,85 +255,46 @@ const datosPersonajes = [
     { id: 6, nombre: "Joey", apellido: "Tribbiani" },
 ];
 
-const preguntasRespuestas = [
-    {
-        id: 1,
-        pregunta: "¿Cómo se llama la cafetería a la que siempre van?",
-        opciones: [{ resp: "Central Park", const: false }, { resp: "Central Perk", const: true }, { resp: "Central Cafe", const: false }],
-        respCorr: "Central Perk",
-    },
-
-    {
-        id: 2,
-        pregunta: "¿Como se llama el hijo de ross?",
-        opciones: [{ resp: "Ben", const: true }, { resp: "Ross Jr.", const: false }, { resp: "David", const: false }],
-        respCorr: "Ben",
-    },
-
-    {
-        id: 3,
-        pregunta: "¿A cuál de los tres chicos conocía Julia Roberts?",
-        opciones: [{ resp: "Ross", const: false }, { resp: "Joey", const: false }, { resp: "Chandler", const: true }],
-        respCorr: "Chandler",
-    },
-
-
-    {
-        id: 4,
-        pregunta: "¿Para qué marca de ropa trabaja Rachel?",
-        opciones: [{ resp: "Prada", const: false }, { resp: "Ralph Lauren", const: true }, { resp: "Gucci", const: false }],
-        respCorr: "Ralph Lauren",
-    },
-
-    {
-        id: 5,
-        pregunta: "¿Cómo se llamaba la compañera de piso de Joey?",
-        opciones: [{ resp: "Janine", const: true }, { resp: "Janet", const: false }, { resp: "Jane", const: false }],
-        respCorr: "Janine",
-    },
-
-    {
-        id: 6,
-        pregunta: "¿A qué fruta es alérgico Ross?",
-        opciones: [{ resp: "Manzana", const: false }, { resp: "Piña", const: false }, { resp: "Kiwi", const: true }],
-        respCorr: "Kiwi",
-    },
-
-    {
-        id: 7,
-        pregunta: "¿Que año salió la serie por primera vez?",
-        opciones: [{ resp: "1994", const: true }, { resp: "1993", const: false }, { resp: "1995", const: false }],
-        respCorr: "1994",
-    },
-
-    {
-        id: 8,
-        pregunta: "¿Que banda canta la canción de apertura?",
-        opciones: [{ resp: "Radiohead", const: false }, { resp: "The Rembrandts", const: true }, { resp: "The Barenaked Ladies", const: false }],
-        respCorr: "The Rembrandts",
-    },
-
-    {
-        id: 9,
-        pregunta: "¿Cuántos pasos hay desde el apartamento de Joey hasta el Central Perk?",
-        opciones: [{ resp: "84", const: false }, { resp: "97", const: true }, { resp: "120", const: false }],
-        respCorr: "97",
-    },
-
-    {
-        id: 10,
-        pregunta: "¿Cuál era el número de apartamento de Mónica?",
-        opciones: [{ resp: "20", const: true }, { resp: "29", const: false }, { resp: "23", const: false }],
-        respCorr: "20",
-    },
-
-]
 
 
 //PREGUNTAS MEZCLADAS
 
-const preguntasRespuestasMix = preguntasRespuestas.sort(() => Math.random() - 0.5);
-console.log(preguntasRespuestasMix)
+const mezclarPreguntas = () => {
+
+    fetch(URLpreguntasYrespuetsas)
+    .then((res) => {
+        console.log(res);
+        return res.json();
+    }).then(preguntasRespuestas => {
+        const preguntasRespuestasMezcladas = preguntasRespuestas.sort(() => Math.random() - 0.5);
+        sessionStorage.setItem("preguntasMezcladas", JSON.stringify(preguntasRespuestasMezcladas));
+        console.log(preguntasRespuestasMezcladas)
+    })
+    .catch(() => {
+        console.log("error");
+    })
+    .finally(() => {
+        
+    })
+  
+}
+
+
+/*    try{
+
+    const preguntasRespuestasJSON = await fetch(URLpreguntasYrespuetsas);
+    const preguntasRespuestas = await preguntasRespuestasJSON.json();
+    const preguntasRespuestasMezcladas = preguntasRespuestas.sort(() => Math.random() - 0.5);
+    console.log(preguntasRespuestasMezcladas);
+    
+
+    } catch {
+        console.log("cooregi");
+    }
+    finally{
+       
+    } */
+
 
 
 
@@ -361,8 +326,12 @@ divMostrarPersonajes.className = "hide";
 
 //INICIO DEL JUEGO
 
+
+
+
 const inicioJuego = () => {
     nombreParticipante();
+    
 }
 btnJugar.addEventListener("click", inicioJuego);
 
@@ -407,7 +376,7 @@ const nombreParticipante = () => {
 const primerJuego = (nombre) => {
     divExplicacion1.className = "divExplicacion1"
     explicacion1.innerText = `Hola ${nombre}. Tendras que contestar 4 preguntas. Si contestas correctamente tres o mas pasas a la segunda parte del juego.`;
-
+    mezclarPreguntas();
     divExplicacion1.addEventListener("submit", (e) => {
         e.preventDefault();
         divExplicacion1.className = "hide";
@@ -415,28 +384,30 @@ const primerJuego = (nombre) => {
         let incorrectas = 0;
         let index = 0;
         preguntas(correctas, incorrectas, index);
+    
+        
     })
 
 }
 
-
+ 
 
 const preguntas = (corr, incorr, index) => {
     if (index < 4) {
-        index++
+        index++;
         let opciones = [];
         formContestacion1.className = "hide";
         formJuego.className = `formJuego`;
-
-
-        const {pregunta: textPregunta, opciones: elecciones} = preguntasRespuestasMix[index];
-        pregunta.innerText = textPregunta;
-        opcion1.innerText = elecciones[0].resp;
-        opcion2.innerText = elecciones[1].resp;
-        opcion3.innerText = elecciones[2].resp;
-        resp1.value = elecciones[0].resp;
-        resp2.value = elecciones[1].resp;
-        resp3.value = elecciones[2].resp;
+        const preguntasRespuestasMix =(JSON.parse(sessionStorage.getItem("preguntasMezcladas")));
+        console.log(preguntasRespuestasMix[index]);
+        /* const {pregunta: textPregunta, opciones: elecciones, respCorr: respuestaCorrecta} = preguntasRespuestasMix[index]; */
+        pregunta.innerText = preguntasRespuestasMix[index].pregunta;
+        opcion1.innerText = preguntasRespuestasMix[index].opciones[0].resp;
+        opcion2.innerText = preguntasRespuestasMix[index].opciones[1].resp;
+        opcion3.innerText = preguntasRespuestasMix[index].opciones[2].resp;
+        resp1.value = preguntasRespuestasMix[index].opciones[0].resp;
+        resp2.value = preguntasRespuestasMix[index].opciones[1].resp;
+        resp3.value = preguntasRespuestasMix[index].opciones[2].resp;
         resp1.checked  = false;
         resp2.checked  = false;
         resp3.checked  = false;
@@ -628,7 +599,7 @@ const segundoJuego = () => {
 
                                 Swal.fire({
                                     title: 'Ups... Perdiste!',
-                                    text: `El nombre y apellido del personaje es ${nom} ${apell}`,
+                                    text: `El nombre y apellido del personaje es ${nom} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase()}`,
                                     icon: 'warning',
                                     confirmButtonText: 'Fin de Juego',
                                     color: "gray",
