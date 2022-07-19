@@ -1,0 +1,9 @@
+[
+    { "id": 1, "nombre": "Rachel", "apellido": "Green" },
+    { "id": 2, "nombre": "Ross", "apellido": "Geller" },
+    { "id": 3, "nombre": "Phoebe", "apellido": "Buffay" },
+    { "id": 5, "nombre": "Monica", "apellido": "Geller" },
+    { "id": 6, "nombre": "Joey", "apellido": "Tribbiani" },
+    { "id": 4, "nombre": "Chandler", "apellido": "Bing" }
+
+]
