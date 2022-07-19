@@ -44,7 +44,7 @@ const divMostrarPersonajes = document.getElementById("divMostrarPersonajes");
 class Introduccion {
     
     //MOSTRAR PANTALLA DE INCIO DE JUEGO
-    mostrarPantallaInicio(){
+    static mostrarPantallaInicio(){
         divJugar.className ="divJugar";
         divSaludo.className = "hide";
         divExplicacion1.className ="hide" ;
@@ -57,7 +57,7 @@ class Introduccion {
 
 
     //PEDIR NOMBRE AL PARTICIPANTE
-    nombreParticipante = () => {    
+    static nombreParticipante () {    
         if (!!localStorage.getItem("nombreParticipante")) {
             divJugar.className = "hide";
             divSaludo.className = "divSaludo";
@@ -67,7 +67,7 @@ class Introduccion {
             divSaludo.addEventListener(`submit`, (e) => {
                 e.preventDefault();
                 divSaludo.className = "hide";
-                primerJuego(localStorage.getItem("nombreParticipante"));
+                PrimerJuego.primerJuego(localStorage.getItem("nombreParticipante"));
         })
         } else {    
             divJugar.className = "hide";
@@ -78,7 +78,7 @@ class Introduccion {
                 let nombre = elementoNombre.value;
                 localStorage.setItem("nombreParticipante",nombre);
                 divSaludo.className = "hide";
-                primerJuego(nombre);
+                PrimerJuego.primerJuego(nombre);
     
             })
         }   
@@ -100,7 +100,7 @@ class PrimerJuego {
     }
 
      //FUNCION PARA MEZCLAR PREGUNTAS
-     mezclarPreguntas () {
+     static mezclarPreguntas () {
 
         fetch(URLpreguntasYrespuetsas)
         .then((res) => {
@@ -121,17 +121,17 @@ class PrimerJuego {
     }
 
     //EXPLICACION E INICIO DEL JUEGO
-    primerJuego = (nombre) => {
+    static primerJuego = (nombre) => {
         divExplicacion1.className = "divExplicacion1"
         explicacion1.innerText = `Hola ${nombre}. Tendras que contestar 4 preguntas. Si contestas correctamente tres o mas pasas a la segunda parte del juego.`;
-        mezclarPreguntas();
+        PrimerJuego.mezclarPreguntas();
         divExplicacion1.addEventListener("submit", (e) => {
             e.preventDefault();
             divExplicacion1.className = "hide";
             let correctas = 0;
             let incorrectas = 0;
             let index = 0;
-            preguntas(correctas, incorrectas, index);
+            PrimerJuego.preguntas(correctas, incorrectas, index);
         
             
         })
@@ -140,7 +140,7 @@ class PrimerJuego {
     
 
     //FUNCION DONDE SE GENERA EL JUEGO
-    preguntas = (corr, incorr, index) => {
+    static preguntas = (corr, incorr, index) => {
         if (index < 4) {
             index++;
             let opciones = [];
@@ -179,7 +179,7 @@ class PrimerJuego {
                        
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            preguntas(corr, incorr, index);
+                            PrimerJuego.preguntas(corr, incorr, index);
                         }
                     })     
                 }
@@ -194,20 +194,20 @@ class PrimerJuego {
                        
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            preguntas(corr, incorr, index);
+                            PrimerJuego.preguntas(corr, incorr, index);
                         }
                     })    
                 }
             })
     
         } else {
-            resumenJuego1(corr, incorr);
+            PrimerJuego.resumenJuego1(corr, incorr);
         }
     }
 
 
     //RESUMEN DE PRIMER JUEGO
-    resumenJuego1 = (corr, incorr) => {
+    static resumenJuego1 = (corr, incorr) => {
         divResultado.className = "hide";
         formJuego.className = "hide";
         formContestacion1.className = "formContestacion1";
@@ -216,7 +216,7 @@ class PrimerJuego {
             e.preventDefault();
             if (corr > 2) {
                 formContestacion1.className = "hide";
-                segundoJuego();
+                SegundoJuego.segundoJuego();
             } else {
                 formContestacion1.className = "hide";
                 /* divResultado.className = "divResultado";
@@ -231,7 +231,7 @@ class PrimerJuego {
                    
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        mostrarPersonajes();
+                        FinDelJuego.mostrarPersonajes();
                     }
                 })
             }
@@ -247,13 +247,14 @@ class SegundoJuego{
         this.apellido = apellido;
     }
 
-    buscarDatosPersonajes(){
+    static buscarDatosPersonajes(){
         fetch(URLdatosPersonajes)
-        .then( () => {
+        .then( (res) => {
             console.log(res);
-        }). then(datosPersonajes => {
-            sessionStorage.setItem("datosPersonajes", JSON.stringify(datosPersonajes));
-            console.log(datosPersonajes);
+            return res.json();
+        }).then(datosPersonaje => {
+            sessionStorage.setItem("datosPersonajes", JSON.stringify(datosPersonaje));
+            console.log(datosPersonaje);
         })
         .catch (() => {
             console.log("error");
@@ -263,12 +264,14 @@ class SegundoJuego{
         })
     }
 
-    segundoJuego() {
+    static segundoJuego() {
+        SegundoJuego.buscarDatosPersonajes();
         divExplicacion1.className = "divExplicacion1";
         divResultado.className = "hide";
         formContestacion1.className = "hide";
         explicacion1.innerText = "Vamos a ver si te sabes algun nombre. Tienes que dar un nombre y apellido sin equivocarte."
         const datosPersonajes = (JSON.parse(sessionStorage.getItem("datosPersonajes")));
+        console.log(datosPersonajes);
         divExplicacion1.addEventListener("submit", (e) => {
             e.preventDefault();
             divExplicacion1.className = "hide";
@@ -283,7 +286,7 @@ class SegundoJuego{
     
                     Swal.fire({
                         title: 'Correcto!',
-                        text: `Un personaje se llama ${nom.toUpperCase()}.`,
+                        text: `Un personaje se llama ${nom.charAt(0).toUpperCase() + nom.slice(1)}.`,
                         icon: 'success',
                         confirmButtonText: 'Siguiente',
                         color: "gray",
@@ -305,7 +308,7 @@ class SegundoJuego{
     
                                     Swal.fire({
                                         title: 'Ganaste!!',
-                                        text: `Es correcto! El nombre y apellido del personaje es ${nom} ${apell}
+                                        text: `Es correcto! El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${apell.charAt(0).toUpperCase() + apell.slice(1)}
                                         Ganaste la segunda parte del juego`,
                                         icon: 'success',
                                         confirmButtonText: 'Fin de Juego',
@@ -313,7 +316,7 @@ class SegundoJuego{
                                        
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            mostrarPersonajes();
+                                            FinDelJuego.mostrarPersonajes();
                                         }
                                     })              
                                 } else {
@@ -323,14 +326,14 @@ class SegundoJuego{
     
                                     Swal.fire({
                                         title: 'Ups... Perdiste!',
-                                        text: `El nombre y apellido del personaje es ${nom} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase()}`,
+                                        text: `El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}`,
                                         icon: 'warning',
                                         confirmButtonText: 'Fin de Juego',
                                         color: "gray",
                                        
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            mostrarPersonajes();
+                                            FinDelJuego.mostrarPersonajes();
                                         }
                                     })
                                 }                       
@@ -350,7 +353,7 @@ class SegundoJuego{
                        
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            mostrarPersonajes();
+                            FinDelJuego.mostrarPersonajes();
                         }
                     })                                          
                 }   
@@ -365,12 +368,12 @@ class FinDelJuego{
 
     }
 
-    mostrarPersonajes() {
+    static mostrarPersonajes() {
         let titulo = document.createElement("h3");
         titulo.innerText = "La lista de personajes es:"
         divMostrarPersonajes.className = "divMostrarPersonajes";
         divMostrarPersonajes.append(titulo);
-        for ( const datosPersonaje of datosPersonajes) {
+        for ( const datosPersonaje of (JSON.parse(sessionStorage.getItem("datosPersonajes")))) {
             const {nombre, apellido} = datosPersonaje;
             let personaje = document.createElement("h5");
             personaje.innerText = `--- ${nombre} ${apellido}`
@@ -382,22 +385,15 @@ class FinDelJuego{
  
 
 //INCIO DEL JUEGO
-//MATUTE
-const contenedor = document.getElementById("contenedor");
-contenedor = new Introduccion();
-contenedor.mostrarPantallaInicio();
+
+Introduccion.mostrarPantallaInicio();
 
 
-btnJugar = new Introduccion();
-btnJugar.addEventListener("click", nombreParticipante);
+btnJugar.addEventListener(`click`, (e) => {
+    e.preventDefault();
+    Introduccion.nombreParticipante()
 
-
-
-
-
-
-
-
+})
 
 
 
