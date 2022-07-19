@@ -382,9 +382,10 @@ class FinDelJuego{
  
 
 //INCIO DEL JUEGO
+//MATUTE
 const contenedor = document.getElementById("contenedor");
 contenedor = new Introduccion();
-mostrarPantallaInicio();
+contenedor.mostrarPantallaInicio();
 
 
 btnJugar = new Introduccion();
