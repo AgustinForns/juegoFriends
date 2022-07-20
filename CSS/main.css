@@ -2,7 +2,7 @@
   display: grid;
   grid-template-rows: 3fr 6fr 1fr;
   grid-template-columns: 55% 45%;
-  grid-template-areas: "header header"  "main video"  "footer footer";
+  grid-template-areas: "header header"  "main main" "video video"  "footer footer";
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -33,7 +33,8 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-    font-size: 2rem; }
+    font-size: 2rem;
+    padding: 50px 10px 50px 10px; }
     .contenedor main .divJugar {
       display: flex;
       flex-direction: column;
@@ -136,7 +137,7 @@
     /* background-image: url('../img/introduccion.jpg');
         background-repeat: no-repeat;
         background-size: cover;
-             */
+            */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -146,3 +147,153 @@
     background-color: gray; }
     .contenedor footer p {
       text-align: center; }
+
+@media only screen and (min-width: 1130px) {
+  .contenedor {
+    display: grid;
+    grid-template-rows: 3fr 6fr 1fr;
+    grid-template-columns: 55% 45%;
+    grid-template-areas: "header header"  "main video"  "footer footer";
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif; }
+    .contenedor header {
+      grid-area: header;
+      background-color: #d8c6c6;
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      .contenedor header nav ul li {
+        display: inline-block; }
+        .contenedor header nav ul li a {
+          text-decoration: none;
+          display: inline-block;
+          background-color: gray;
+          color: black;
+          border-radius: 50px;
+          font-size: 20px;
+          margin: 10px;
+          padding: 10px; }
+    .contenedor main {
+      grid-area: main;
+      background-color: antiquewhite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+      font-size: 2rem; }
+      .contenedor main .divJugar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        margin: 2rem; }
+        .contenedor main .divJugar #btnJugar {
+          width: fit-content;
+          margin-top: 2rem;
+          font-size: 2rem;
+          background-color: #ce8383;
+          border-radius: 0.7rem;
+          padding: 0.5rem; }
+      .contenedor main .divSaludo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        border: black 2px solid;
+        padding: 10px; }
+        .contenedor main .divSaludo #nombre {
+          font-size: 2rem; }
+        .contenedor main .divSaludo #btnSaludo {
+          margin-top: 2rem;
+          font-size: 2rem;
+          background-color: #ce8383;
+          border-radius: 0.7rem;
+          padding: 0.5rem; }
+      .contenedor main .divExplicacion1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        margin: 2rem; }
+        .contenedor main .divExplicacion1 #btnExplicacion1 {
+          font-size: 2rem;
+          background-color: #ce8383;
+          border-radius: 0.7rem;
+          padding: 0.5rem; }
+      .contenedor main .formContestacion1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        margin: 2rem; }
+        .contenedor main .formContestacion1 #btnContestacion1 {
+          font-size: 2rem;
+          background-color: #ce8383;
+          border-radius: 0.7rem;
+          padding: 0.5rem; }
+      .contenedor main .formJuego {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem; }
+        .contenedor main .formJuego #btnRJ1 {
+          font-size: 2rem;
+          background-color: #ce8383;
+          border-radius: 0.7rem;
+          padding: 0.5rem;
+          margin-top: 2rem; }
+      .contenedor main .divJuego2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem; }
+        .contenedor main .divJuego2 #btnRJ2 {
+          font-size: 2rem;
+          background-color: #ce8383;
+          border-radius: 0.7rem;
+          padding: 0.5rem;
+          margin-top: 2rem; }
+        .contenedor main .divJuego2 #respJ2 {
+          font-size: 2rem; }
+      .contenedor main .divMostrarPersonajes {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem; }
+        .contenedor main .divMostrarPersonajes h5 {
+          margin: 0.1rem; }
+      .contenedor main .divResultado {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        margin: 2rem; }
+      .contenedor main .hide {
+        display: none; }
+    .contenedor .video {
+      grid-area: video;
+      /* background-image: url('../img/introduccion.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+                */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; }
+    .contenedor footer {
+      grid-area: footer;
+      background-color: gray; }
+      .contenedor footer p {
+        text-align: center; } }

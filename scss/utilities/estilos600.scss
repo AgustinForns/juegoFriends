@@ -1,0 +1,176 @@
+@media only screen and (min-width:1130px){
+
+    .contenedor{
+        display: grid;
+        grid-template-rows: 3fr 6fr 1fr;
+        grid-template-columns: 55% 45%;
+        grid-template-areas: "header header" 
+                            "main video" 
+                            "footer footer";
+        
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        height: 100vh;
+        font-family: 'Roboto', sans-serif; 
+    
+
+        header{
+            grid-area: header;
+            background-color: rgb(216, 198, 198);
+            display: flex;
+            flex-direction: column;
+            align-items: center;        
+
+            nav{
+                ul{
+                    li{
+                        display: inline-block;
+                        a{     
+                            text-decoration: none;                 
+                            display: inline-block;
+                            background-color: gray;
+                            color: black;
+                            border-radius: 50px;
+                            font-size: 20px;
+                            margin: 10px;
+                            padding: 10px;
+                        }
+                    }
+                }
+            }
+        }
+
+        main{
+            grid-area: main;
+            background-color: antiquewhite;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            font-size: 2rem;
+            
+
+
+            //INICIO DEL JUEGO
+            .divJugar{
+                @include flexCenter;
+                margin: 2rem;
+                
+
+                #btnJugar{
+                    width:fit-content;
+                    margin-top: 2rem;
+                    @include botones;               
+                }
+            }
+
+            //INGRESAR NOMBRE
+            .divSaludo{
+                @include flexCenter;
+                border: black 2px solid;
+                padding: 10px;
+                
+
+                #nombre{
+                    @include inputs;
+                }
+
+                #btnSaludo{
+                    margin-top: 2rem;
+                    @include botones;
+                }
+            }
+
+            //EXPLICACION JUEGOS
+            .divExplicacion1{
+                @include flexCenter;
+                margin: 2rem;
+
+                #btnExplicacion1{
+                    @include botones;
+                }       
+            }
+
+            //CONTESTACION JUEGOS
+            .formContestacion1{
+                @include flexCenter;
+                margin: 2rem;
+
+                #btnContestacion1{
+                    @include botones;
+                }
+
+            }
+
+            //JUEGO 1
+            .formJuego{
+                @include flexCenter;
+                #btnRJ1{
+                    @include botones;
+                    margin-top: 2rem;
+                }
+
+            }
+
+            //JUEGO 2
+            .divJuego2{
+                @include flexCenter;
+                
+                #btnRJ2{
+                    @include botones;
+                    margin-top: 2rem;
+                }
+
+                #respJ2{
+                    font-size: 2rem;
+                }
+            }
+            
+            //MOSTRAR PERSONAJES
+
+            .divMostrarPersonajes{
+                @include flexCenter;
+
+                h5{
+                    margin: 0.1rem;
+                }
+            }
+
+            //RESULTADO FINAL DEL JUEGO
+            .divResultado{
+                @include flexCenter;
+                margin: 2rem;
+            }
+
+            .hide{
+                display: none;
+            }
+
+            
+
+            
+        }
+
+        .video{
+            grid-area: video;
+            /* background-image: url('../img/introduccion.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+                */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+        }    
+        footer{
+            grid-area: footer;
+            background-color: gray;
+            p{
+                text-align: center;
+            }
+        }
+    }
+}
