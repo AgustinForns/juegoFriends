@@ -64,6 +64,18 @@
             
 
             #btnJugar{
+                @keyframes aparecer{
+
+                    from{
+                        transform: scale(0.95);
+                    }
+                    to{
+                        transform: scale(1.3);
+                    }
+                }
+                animation-name: aparecer;
+                animation-iteration-count: infinite;
+                animation-duration: 1s; 
                 width:fit-content;
                 margin-top: 2rem;
                 @include botones;               
@@ -97,6 +109,15 @@
             }       
         }
 
+        .divExplicacion2{
+            @include flexCenter;
+            margin: 2rem;
+
+            #btnExplicacion2{
+                @include botones;
+            }       
+        }
+
         //CONTESTACION JUEGOS
         .formContestacion1{
             @include flexCenter;
@@ -116,11 +137,27 @@
                 margin-top: 2rem;
             }
 
+        #temporizador1{
+                background-color: rgb(240, 134, 134);
+                padding: 20px;
+                border-radius: 100px;
+                font-size: 30px;
+                font-weight: bolder;
+        }
+ 
         }
 
         //JUEGO 2
         .divJuego2{
             @include flexCenter;
+
+            #temporizador2{
+                background-color: rgb(240, 134, 134);
+                padding: 20px;
+                border-radius: 100px;
+                font-size: 30px;
+                font-weight: bolder;
+            }
             
             #btnRJ2{
                 @include botones;

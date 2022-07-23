@@ -11,7 +11,11 @@ const divJugar = document.getElementById("divJugar");
 const divExplicacion1 = document.getElementById("divExplicacion1");
 const explicacion1 = document.getElementById("explicacion1");
 
+const divExplicacion2 = document.getElementById("divExplicacion2");
+const explicacion2 = document.getElementById("explicacion2");
+
 const formJuego = document.getElementById("formJuego");
+const temporizador1 = document.getElementById("temporizador1");
 const pregunta = document.getElementById("pregunta");
 const respuestas = document.getElementById("respuesta");
 const opcion1 = document.getElementById("opcion1");
@@ -28,6 +32,7 @@ const divResultado = document.getElementById("divResultado");
 const resultado = document.getElementById("resultado");
 
 const divJuego2 = document.getElementById("divJuego2");
+const temporizador2 = document.getElementById("temporizador2");
 const respJ2 = document.getElementById("respJ2");
 const btnRJ2 = document.getElementById("btnRJ2");
 const pregJ2 = document.getElementById("pregJ2");
@@ -48,6 +53,8 @@ class Introduccion {
         divJugar.className ="divJugar";
         divSaludo.className = "hide";
         divExplicacion1.className ="hide" ;
+        formContestacion1.className = "hide";
+        divExplicacion2.className ="hide" ;
         formContestacion1.className = "hide";
         formJuego.className = "hide";
         divJuego2.className = "hide";
@@ -87,7 +94,15 @@ class Introduccion {
 }
 
 
- 
+class libreria {
+    constructor(){
+
+    }
+
+    mensaje(){
+
+    }
+}
 
 
 
@@ -123,7 +138,7 @@ class PrimerJuego {
     //EXPLICACION E INICIO DEL JUEGO
     static primerJuego = (nombre) => {
         divExplicacion1.className = "divExplicacion1"
-        explicacion1.innerText = `Hola ${nombre}. Tendras que contestar 4 preguntas. Si contestas correctamente tres o mas pasas a la segunda parte del juego.`;
+        explicacion1.innerText = `Hola ${nombre}. Tendras que contestar 3 preguntas correctas. Tienes cinco chances y cinco segundos para responder cada pregunta.`;
         PrimerJuego.mezclarPreguntas();
         divExplicacion1.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -137,11 +152,73 @@ class PrimerJuego {
         })
     
     }
+
+    //TEMPORIZADOR
+    intervaloTiempo = setInterval((tiempo) => {
+        tiempo++;
+        segundosDom.innerHTML = PrimerJuego.pad(tiempo % 60);
+        console.log(tiempo);
+        tiempoDom.innerHTML = tiempo;
+      }, 1000);
+
+
+    //ANALISIS PREGUNTA
+    static analisisRespuesta(opciones, corr, incorr, preguntasRespuestasMix, index){
+        let opcionElegida = "";
+            for (const opcion of opciones) {
+                if (opcion.checked) {
+                    opcionElegida = opcion.value;
+                }   
+            }
     
+            if (opcionElegida == (preguntasRespuestasMix[index].respCorr)) {
+                corr++;
+                Swal.fire({
+                    title: 'Es correcta.',
+                    icon: 'success',
+                    confirmButtonText: 'Siguiente pregunta',
+                    color: "gray",
+                       
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        PrimerJuego.preguntas(corr, incorr, index);
+                    }
+                })     
+            }
+            else {
+                incorr++;
+                Swal.fire({
+                title: 'Ups... Te equivocaste.',
+                text: `La respuesta es ${(preguntasRespuestasMix[index].respCorr).toUpperCase()}`,
+                icon: 'warning',
+                confirmButtonText: 'Siguiente pregunta',
+                color: "gray",
+                       
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    PrimerJuego.preguntas(corr, incorr, index);
+                    }
+                })    
+            } 
+    }
+
+    //PAD
+    static pad (val) {
+        let valString = val.toString();
+        if (valString.length < 2) {
+          return '0' + valString;
+        } else {
+          return valString;
+        }
+      }
 
     //FUNCION DONDE SE GENERA EL JUEGO
     static preguntas = (corr, incorr, index) => {
-        if (index < 4) {
+        if (index < 5 && corr < 3 && incorr < 3 ) {
+            let tiempoEspera;
+            let intervaloTiempo;
+            let tiempo = 0;
+            temporizador1.innerText = tiempo;
             index++;
             let opciones = [];
             formContestacion1.className = "hide";
@@ -159,48 +236,33 @@ class PrimerJuego {
             resp2.checked  = false;
             resp3.checked  = false;
             opciones = [resp1, resp2, resp3];
+            
+            intervaloTiempo = setInterval(() => {
+                tiempo++;
+                console.log(tiempo)
+                temporizador1.innerText = tiempo;
+                
+            }, 1000);
+
+            tiempoEspera = setTimeout(() => {
+                clearTimeout(tiempoEspera);
+                clearInterval(intervaloTiempo);
+                PrimerJuego.analisisRespuesta(opciones, corr, incorr, preguntasRespuestasMix, index)
+            }, 5000) 
+
     
+
             formJuego.addEventListener("submit", (e) => {
                 e.preventDefault();
-                let opcionElegida = "";
-                for (const opcion of opciones) {
-                    if (opcion.checked) {
-                        opcionElegida = opcion.value;
-                    }   
-                }
-    
-                if (opcionElegida == (preguntasRespuestasMix[index].respCorr)) {
-                    corr++;
-                    Swal.fire({
-                        title: 'Es correcta.',
-                        icon: 'success',
-                        confirmButtonText: 'Siguiente pregunta',
-                        color: "gray",
-                       
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            PrimerJuego.preguntas(corr, incorr, index);
-                        }
-                    })     
-                }
-                else {
-                    incorr++;
-                    Swal.fire({
-                        title: 'Ups... Te equivocaste.',
-                        text: `La respuesta es ${(preguntasRespuestasMix[index].respCorr).toUpperCase()}`,
-                        icon: 'warning',
-                        confirmButtonText: 'Siguiente pregunta',
-                        color: "gray",
-                       
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            PrimerJuego.preguntas(corr, incorr, index);
-                        }
-                    })    
-                }
-            })
+                clearTimeout(tiempoEspera);
+                clearInterval(intervaloTiempo);
+                PrimerJuego.analisisRespuesta(opciones, corr, incorr, preguntasRespuestasMix, index);
+            }) 
+            
+            
     
         } else {
+            clearTimeout(PrimerJuego.tiempoEspera);
             PrimerJuego.resumenJuego1(corr, incorr);
         }
     }
@@ -219,9 +281,6 @@ class PrimerJuego {
                 SegundoJuego.segundoJuego();
             } else {
                 formContestacion1.className = "hide";
-                /* divResultado.className = "divResultado";
-                resultado.innerText = "Fin del juego"; */
-    
                 Swal.fire({
                     title: 'Ups.. Perdiste',
                     text: `Intenta de nuevo!`,
@@ -264,22 +323,220 @@ class SegundoJuego{
         })
     }
 
+    static pedirApellido(datosPersonajes, nom){
+        let apell = respJ2.value.toLowerCase();
+        if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
+            formJuego.className = "hide";
+            formContestacion1.className = "hide";
+            divJuego2.className = "hide";
+
+            Swal.fire({
+                title: 'Ganaste!!',
+                text: `Es correcto! El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${apell.charAt(0).toUpperCase() + apell.slice(1)}
+                Ganaste la segunda parte del juego`,
+                icon: 'success',
+                confirmButtonText: 'Fin de Juego',
+                color: "gray",
+               
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    FinDelJuego.mostrarPersonajes();
+                }
+            })              
+        } else {
+            formJuego.className = "hide"
+            formContestacion1.className = "hide";
+            divJuego2.className = "hide";
+
+            Swal.fire({
+                title: 'Ups... Perdiste!',
+                text: `El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}`,
+                icon: 'warning',
+                confirmButtonText: 'Fin de Juego',
+                color: "gray",
+               
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    FinDelJuego.mostrarPersonajes();
+                }
+            })
+        }           
+    }
+
+    static pedirNombre(datosPersonajes) {
+        let nom = respJ2.value;
+        if ((datosPersonajes.some(id => id.nombre.toLowerCase() === nom.toLowerCase())) === true) {
+            formJuego.className = "hide";
+            divJuego2.className = "hide";
+
+            Swal.fire({
+                title: 'Correcto!',
+                text: `Un personaje se llama ${nom.charAt(0).toUpperCase() + nom.slice(1)}.`,
+                icon: 'success',
+                confirmButtonText: 'Siguiente',
+                color: "gray",
+               
+            }).then((result) => {
+                if (result.isConfirmed) {            
+                    divExplicacion2.className = "hide";
+                    formContestacion1.className = "hide";
+                    formJuego.className = "hide";
+                    divJuego2.className = "divJuego2";
+                    pregJ2.innerText = `Ahora di el apellido de ${nom}`;
+
+                    let intervaloTiempo2;
+                    let tiempoEspera2;
+                    let tiempo2 = 0;
+                    temporizador2.innerText = tiempo2;
+        
+                    intervaloTiempo2 = setInterval(() => {
+                        tiempo2++;
+                        console.log(tiempo2);
+                        temporizador2.innerText = tiempo2;
+                        
+                    }, 1000);
+            
+                    tiempoEspera2 = setTimeout(() => {
+                        clearTimeout(tiempoEspera2);
+                        clearInterval(intervaloTiempo2);
+                        SegundoJuego.pedirApellido(datosPersonajes, nom);
+                        /* let apell = respJ2.value.toLowerCase();
+                        if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
+                            formJuego.className = "hide";
+                            formContestacion1.className = "hide";
+                            divJuego2.className = "hide";
+
+                            Swal.fire({
+                                title: 'Ganaste!!',
+                                text: `Es correcto! El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${apell.charAt(0).toUpperCase() + apell.slice(1)}
+                                Ganaste la segunda parte del juego`,
+                                icon: 'success',
+                                confirmButtonText: 'Fin de Juego',
+                                color: "gray",
+                               
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    FinDelJuego.mostrarPersonajes();
+                                }
+                            })              
+                        } else {
+                            formJuego.className = "hide"
+                            formContestacion1.className = "hide";
+                            divJuego2.className = "hide";
+
+                            Swal.fire({
+                                title: 'Ups... Perdiste!',
+                                text: `El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}`,
+                                icon: 'warning',
+                                confirmButtonText: 'Fin de Juego',
+                                color: "gray",
+                               
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    FinDelJuego.mostrarPersonajes();
+                                }
+                            })
+                        }      */  
+                    }, 10000)     
+        
+
+                    btnRJ2.addEventListener("click", () => {
+                        clearTimeout(tiempoEspera2);
+                        clearInterval(intervaloTiempo2);
+                        SegundoJuego.pedirApellido(datosPersonajes, nom);
+                        /* let apell = respJ2.value.toLowerCase();
+                        if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
+                            formJuego.className = "hide";
+                            formContestacion1.className = "hide";
+                            divJuego2.className = "hide";
+
+                            Swal.fire({
+                                title: 'Ganaste!!',
+                                text: `Es correcto! El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${apell.charAt(0).toUpperCase() + apell.slice(1)}
+                                Ganaste la segunda parte del juego`,
+                                icon: 'success',
+                                confirmButtonText: 'Fin de Juego',
+                                color: "gray",
+                               
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    FinDelJuego.mostrarPersonajes();
+                                }
+                            })              
+                        } else {
+                            formJuego.className = "hide"
+                            formContestacion1.className = "hide";
+                            divJuego2.className = "hide";
+
+                            Swal.fire({
+                                title: 'Ups... Perdiste!',
+                                text: `El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}`,
+                                icon: 'warning',
+                                confirmButtonText: 'Fin de Juego',
+                                color: "gray",
+                               
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    FinDelJuego.mostrarPersonajes();
+                                }
+                            })
+                        }  */                      
+                    })     
+                }
+            })
+        } else { 
+            formJuego.className = "hide";
+            formContestacion1.className = "hide";
+            divJuego2.className = "hide";
+            Swal.fire({
+                title: 'Ups... Te equivocaste.',
+                text: `No existe ningun personajes con ese nombre`,
+                icon: 'warning',
+                confirmButtonText: 'Fin de Juego',
+                color: "gray",
+               
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    FinDelJuego.mostrarPersonajes();
+                }
+            })                                          
+        }      
+    }
+
     static segundoJuego() {
+    
         SegundoJuego.buscarDatosPersonajes();
-        divExplicacion1.className = "divExplicacion1";
+        divExplicacion2.className = "divExplicacion2";
         divResultado.className = "hide";
         formContestacion1.className = "hide";
-        explicacion1.innerText = "Vamos a ver si te sabes algun nombre. Tienes que dar un nombre y apellido sin equivocarte."
+        explicacion2.innerText = "Vamos a ver si te sabes algun nombre. Tienes que dar un nombre y apellido sin equivocarte."
         const datosPersonajes = (JSON.parse(sessionStorage.getItem("datosPersonajes")));
         console.log(datosPersonajes);
-        divExplicacion1.addEventListener("submit", (e) => {
+
+        divExplicacion2.addEventListener("submit", (e) => {
             e.preventDefault();
-            divExplicacion1.className = "hide";
+            divExplicacion2.className = "hide";
             formJuego.className = "hide";
             divJuego2.className = "divJuego2";
             pregJ2.innerText = "Di primero un nombre:"
-            btnRJ2.addEventListener("click", () => {
-                let nom = respJ2.value;
+
+            let intervaloTiempo2;
+            let tiempoEspera2;
+            let tiempo2 = 0;
+            temporizador2.innerText = tiempo2;
+
+            intervaloTiempo2 = setInterval(() => {
+                tiempo2++;
+                console.log(tiempo2);
+                temporizador2.innerText = tiempo2;
+                
+            }, 1000);
+    
+            tiempoEspera2 = setTimeout(() => {
+                clearTimeout(tiempoEspera2);
+                clearInterval(intervaloTiempo2);
+                SegundoJuego.pedirNombre(datosPersonajes); 
+                /* let nom = respJ2.value;
                 if ((datosPersonajes.some(id => id.nombre.toLowerCase() === nom.toLowerCase())) === true) {
                     formJuego.className = "hide";
                     divJuego2.className = "hide";
@@ -293,7 +550,7 @@ class SegundoJuego{
                        
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            divExplicacion1.className = "hide";
+                            divExplicacion2.className = "hide";
                             formContestacion1.className = "hide";
                             formJuego.className = "hide";
                             divJuego2.className = "divJuego2";
@@ -356,7 +613,93 @@ class SegundoJuego{
                             FinDelJuego.mostrarPersonajes();
                         }
                     })                                          
-                }   
+                }    
+                 */
+            }, 10000)     
+
+
+            btnRJ2.addEventListener("click", () => {
+                clearTimeout(tiempoEspera2);
+                clearInterval(intervaloTiempo2); 
+                SegundoJuego.pedirNombre(datosPersonajes); 
+                /* let nom = respJ2.value;
+                if ((datosPersonajes.some(id => id.nombre.toLowerCase() === nom.toLowerCase())) === true) {
+                    formJuego.className = "hide";
+                    divJuego2.className = "hide";
+    
+                    Swal.fire({
+                        title: 'Correcto!',
+                        text: `Un personaje se llama ${nom.charAt(0).toUpperCase() + nom.slice(1)}.`,
+                        icon: 'success',
+                        confirmButtonText: 'Siguiente',
+                        color: "gray",
+                       
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            divExplicacion2.className = "hide";
+                            formContestacion1.className = "hide";
+                            formJuego.className = "hide";
+                            divJuego2.className = "divJuego2";
+                            pregJ2.innerText = `Ahora di el apellido de ${nom}`;
+    
+                            btnRJ2.addEventListener("click", () => {
+                                let apell = respJ2.value.toLowerCase();
+                                if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
+                                    formJuego.className = "hide";
+                                    formContestacion1.className = "hide";
+                                    divJuego2.className = "hide";
+    
+                                    Swal.fire({
+                                        title: 'Ganaste!!',
+                                        text: `Es correcto! El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${apell.charAt(0).toUpperCase() + apell.slice(1)}
+                                        Ganaste la segunda parte del juego`,
+                                        icon: 'success',
+                                        confirmButtonText: 'Fin de Juego',
+                                        color: "gray",
+                                       
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            FinDelJuego.mostrarPersonajes();
+                                        }
+                                    })              
+                                } else {
+                                    formJuego.className = "hide"
+                                    formContestacion1.className = "hide";
+                                    divJuego2.className = "hide";
+    
+                                    Swal.fire({
+                                        title: 'Ups... Perdiste!',
+                                        text: `El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}`,
+                                        icon: 'warning',
+                                        confirmButtonText: 'Fin de Juego',
+                                        color: "gray",
+                                       
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            FinDelJuego.mostrarPersonajes();
+                                        }
+                                    })
+                                }                       
+                            })     
+                        }
+                    })
+                } else { 
+                    formJuego.className = "hide";
+                    formContestacion1.className = "hide";
+                    divJuego2.className = "hide";
+                    Swal.fire({
+                        title: 'Ups... Te equivocaste.',
+                        text: `No existe ningun personajes con ese nombre`,
+                        icon: 'warning',
+                        confirmButtonText: 'Fin de Juego',
+                        color: "gray",
+                       
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            FinDelJuego.mostrarPersonajes();
+                        }
+                    })                                          
+                }    */
             })
         })
     }     
