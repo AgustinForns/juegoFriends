@@ -122,6 +122,8 @@
         border-radius: 0.7rem;
         padding: 0.5rem;
         margin-top: 2rem; }
+      .contenedor main .formJuego #barraTiempo1 {
+        background-color: red; }
       .contenedor main .formJuego #temporizador1 {
         background-color: #f08686;
         padding: 20px;
@@ -133,7 +135,8 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 2rem; }
+      font-size: 2rem;
+      position: relative; }
       .contenedor main .divJuego2 #temporizador2 {
         background-color: #f08686;
         padding: 20px;

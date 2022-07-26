@@ -1,19 +1,24 @@
 
+//---------------------------------------------------------------------------------OBTENCION DE HTML
 
 
+//-----------------------------------------------------------------PANTANLLA DE INICIO
+
+//---------------------------DAR INICIO AL JUEGO
+const btnJugar = document.getElementById("btnJugar");
+const divJugar = document.getElementById("divJugar");
+//---------------------------SALUDAR
 const divSaludo = document.getElementById("divSaludo");
 const elementoNombre = document.getElementById("nombre");
 const textSaludo = document.getElementById("textSaludo");
 
-const btnJugar = document.getElementById("btnJugar");
-const divJugar = document.getElementById("divJugar");
 
+//-----------------------------------------------------------------JUEGO 1
+//-----------------------------EXPLICACION DEL JUEGO
 const divExplicacion1 = document.getElementById("divExplicacion1");
 const explicacion1 = document.getElementById("explicacion1");
-
-const divExplicacion2 = document.getElementById("divExplicacion2");
-const explicacion2 = document.getElementById("explicacion2");
-
+//-----------------------------DESARROLLO DEL JUEGO
+//----MOSTRAR OPCIONES
 const formJuego = document.getElementById("formJuego");
 const temporizador1 = document.getElementById("temporizador1");
 const pregunta = document.getElementById("pregunta");
@@ -24,30 +29,91 @@ const opcion3 = document.getElementById("opcion3");
 const resp1 = document.getElementById("resp1");
 const resp2 = document.getElementById("resp2");
 const resp3 = document.getElementById("resp3");
-
+//----RESPONDER SI ES CORRECTA O INCORRECTA
 const formContestacion1 = document.getElementById("formContestacion1");
 const contestacion1 = document.getElementById("contestacion1");
 
-const divResultado = document.getElementById("divResultado");
-const resultado = document.getElementById("resultado");
+const barraTiempo1 = document.getElementById("barraTiempo1");
 
+
+//---------------------------------------------------JUEGO2
+//--------------------------EXPLICACION DEL JUEGO
+const divExplicacion2 = document.getElementById("divExplicacion2");
+const explicacion2 = document.getElementById("explicacion2");
+//-------------------------DESARROLLO DE JUEGO
 const divJuego2 = document.getElementById("divJuego2");
 const temporizador2 = document.getElementById("temporizador2");
 const respJ2 = document.getElementById("respJ2");
 const btnRJ2 = document.getElementById("btnRJ2");
 const pregJ2 = document.getElementById("pregJ2");
 
+
+
+
+//-------------------------------------------------FINALIZACION DEL JUEGO
+//------------------------MOSTRAR PERSONAJES
 const divMostrarPersonajes = document.getElementById("divMostrarPersonajes"); 
 
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//--------------------------------------------------------------------------------OBTENCION DE DATOS .JSON
  const URLpreguntasYrespuetsas = "datos/preguntasYrespuestas.json";
  const URLdatosPersonajes = "datos/datosPersonajes.json";
 
 
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------DEFINCION DE CLASES
 
 
-class Introduccion {
+//-------------------------------------------------ANIMACIONES
+
+class Animaciones {
+    static aparecer(element){
+        element.animate({
+            opacity: [ 0, 0.9, 1 ],
+            offset: [ 0, 0.8 ],
+            easing: [ 'ease-in', 'ease-out' ],
+          }, 1000);
+    }
     
+    static rotar(element){
+        element.animate([
+            {transform: "rotate(360deg)"}
+        ],{
+            iterations: 1,
+            easing: "ease",
+            duration: 1000
+
+        })
+    }
+
+    static agrandar(element){
+        element.animate([
+            {transform: "scale(0.8,1)"}
+        ], {
+            iterations: 1,
+            easing: "ease-in-out",
+            duration: 1000,
+        }
+    )}
+
+    static entrar(element){
+        element.animate([
+            {transform: "translateX(-500px)"},
+            {transform: "translateX(0)"}
+        ], {
+            iterations: 1,
+            easing: "Linear",
+            duration: 1000,
+        }
+        )}
+}
+
+//------------------------------------------------ INICIO DEL JUEGO
+class Introduccion {
     //MOSTRAR PANTALLA DE INCIO DE JUEGO
     static mostrarPantallaInicio(){
         divJugar.className ="divJugar";
@@ -58,7 +124,6 @@ class Introduccion {
         formContestacion1.className = "hide";
         formJuego.className = "hide";
         divJuego2.className = "hide";
-        divResultado.className = "hide"; 
         divMostrarPersonajes.className = "hide";
     }
 
@@ -68,6 +133,7 @@ class Introduccion {
         if (!!localStorage.getItem("nombreParticipante")) {
             divJugar.className = "hide";
             divSaludo.className = "divSaludo";
+            Animaciones.agrandar(divSaludo);
             elementoNombre.className = "hide";
             textSaludo.innerText = `Bienvenido de nuevo ${localStorage.getItem("nombreParticipante")}`;
     
@@ -94,27 +160,9 @@ class Introduccion {
 }
 
 
-class libreria {
-    constructor(){
-
-    }
-
-    mensaje(){
-
-    }
-}
-
-
-
+//-----------------------------------------------PRIMER JUEGO
 class PrimerJuego {
-    constructor(id, pregunta, opciones, respCorr){
-        this.id = id;
-        this. pregunta = pregunta;
-        this.opciones = opciones;
-        this.respCorr = respCorr;
-    }
-
-     //FUNCION PARA MEZCLAR PREGUNTAS
+     //OBTENER DATOS DE ARCHIVO .JSON Y MEZCLAR PREGUNTAS PARA MAS ALEATORIDAD
      static mezclarPreguntas () {
 
         fetch(URLpreguntasYrespuetsas)
@@ -137,7 +185,8 @@ class PrimerJuego {
 
     //EXPLICACION E INICIO DEL JUEGO
     static primerJuego = (nombre) => {
-        divExplicacion1.className = "divExplicacion1"
+        divExplicacion1.className = "divExplicacion1";
+        Animaciones.aparecer(divExplicacion1);
         explicacion1.innerText = `Hola ${nombre}. Tendras que contestar 3 preguntas correctas. Tienes cinco chances y cinco segundos para responder cada pregunta.`;
         PrimerJuego.mezclarPreguntas();
         divExplicacion1.addEventListener("submit", (e) => {
@@ -153,16 +202,7 @@ class PrimerJuego {
     
     }
 
-    //TEMPORIZADOR
-    intervaloTiempo = setInterval((tiempo) => {
-        tiempo++;
-        segundosDom.innerHTML = PrimerJuego.pad(tiempo % 60);
-        console.log(tiempo);
-        tiempoDom.innerHTML = tiempo;
-      }, 1000);
-
-
-    //ANALISIS PREGUNTA
+    //ANALISIS PREGUNTA (DETERMINAR SI ES CORRECTA O INCORRECTA)
     static analisisRespuesta(opciones, corr, incorr, preguntasRespuestasMix, index){
         let opcionElegida = "";
             for (const opcion of opciones) {
@@ -178,6 +218,8 @@ class PrimerJuego {
                     icon: 'success',
                     confirmButtonText: 'Siguiente pregunta',
                     color: "gray",
+                    confirmButtonColor: "#ce8383",
+                    allowOutsideClick: false,
                        
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -193,6 +235,8 @@ class PrimerJuego {
                 icon: 'warning',
                 confirmButtonText: 'Siguiente pregunta',
                 color: "gray",
+                confirmButtonColor: "#ce8383",
+                allowOutsideClick: false,
                        
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -202,27 +246,30 @@ class PrimerJuego {
             } 
     }
 
-    //PAD
-    static pad (val) {
-        let valString = val.toString();
-        if (valString.length < 2) {
-          return '0' + valString;
-        } else {
-          return valString;
-        }
-      }
-
-    //FUNCION DONDE SE GENERA EL JUEGO
+   
+    
+    //FUNCION DONDE SE GENERA EL JUEGO (SE REPITE HASTA PERDER O PASAR AL SEGUNDO JUEGO)
     static preguntas = (corr, incorr, index) => {
+        
         if (index < 5 && corr < 3 && incorr < 3 ) {
+            formContestacion1.className = "hide";
+            formJuego.className = `formJuego`;
+
+         /*    formJuego.animate({
+                opacity: [ 0, 0.9, 1 ],
+                offset: [ 0, 0.8 ],
+                easing: [ 'ease-in', 'ease-out' ],
+              }, 500); */
+            
+            Animaciones.aparecer(formJuego);
+    
+
             let tiempoEspera;
             let intervaloTiempo;
-            let tiempo = 0;
+            let tiempo = 5;
             temporizador1.innerText = tiempo;
             index++;
             let opciones = [];
-            formContestacion1.className = "hide";
-            formJuego.className = `formJuego`;
             const preguntasRespuestasMix =(JSON.parse(sessionStorage.getItem("preguntasMezcladas")));
             console.log(preguntasRespuestasMix[index]);
             pregunta.innerText = preguntasRespuestasMix[index].pregunta;
@@ -238,7 +285,7 @@ class PrimerJuego {
             opciones = [resp1, resp2, resp3];
             
             intervaloTiempo = setInterval(() => {
-                tiempo++;
+                tiempo--;
                 console.log(tiempo)
                 temporizador1.innerText = tiempo;
                 
@@ -268,11 +315,11 @@ class PrimerJuego {
     }
 
 
-    //RESUMEN DE PRIMER JUEGO
+    //RESUMEN DE PRIMER JUEGO (DETERMINA SI PIERDE ELPRIMER JUEGO O GANA Y PASA AL SEGUNDO)
     static resumenJuego1 = (corr, incorr) => {
-        divResultado.className = "hide";
         formJuego.className = "hide";
         formContestacion1.className = "formContestacion1";
+        Animaciones.rotar(formContestacion1);
         contestacion1.innerText = `Como resultado obtuviste ${corr} respuestas correctas y ${incorr} respuestas incorrectas`
         formContestacion1.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -287,6 +334,8 @@ class PrimerJuego {
                     icon: 'warning',
                     confirmButtonText: 'Fin de Juego',
                     color: "gray",
+                    confirmButtonColor: "#ce8383",
+                    allowOutsideClick: false,
                    
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -298,14 +347,9 @@ class PrimerJuego {
     }
 }
  
-
+//----------------------------------------------------SEGUNDO JUEGO
 class SegundoJuego{
-    constructor(id, nombre, apellido){
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-
+    //BUSCAR LOS DATOS DE PERSONAJES DEL ARCHIVO .JSON
     static buscarDatosPersonajes(){
         fetch(URLdatosPersonajes)
         .then( (res) => {
@@ -323,7 +367,8 @@ class SegundoJuego{
         })
     }
 
-    static pedirApellido(datosPersonajes, nom){
+    //DETERMINAR SI EL APELLIDO INGRESADO ES CORRECTO
+    static leerApellido(datosPersonajes, nom){
         let apell = respJ2.value.toLowerCase();
         if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
             formJuego.className = "hide";
@@ -337,6 +382,8 @@ class SegundoJuego{
                 icon: 'success',
                 confirmButtonText: 'Fin de Juego',
                 color: "gray",
+                confirmButtonColor: "#ce8383",
+                allowOutsideClick: false,
                
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -354,6 +401,8 @@ class SegundoJuego{
                 icon: 'warning',
                 confirmButtonText: 'Fin de Juego',
                 color: "gray",
+                confirmButtonColor: "#ce8383",
+                allowOutsideClick: false,
                
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -363,7 +412,8 @@ class SegundoJuego{
         }           
     }
 
-    static pedirNombre(datosPersonajes) {
+    //DTERMINAR SI EL NOMBRE INGRESADO ES CORRECTO
+    static leerNombre(datosPersonajes) {
         let nom = respJ2.value;
         if ((datosPersonajes.some(id => id.nombre.toLowerCase() === nom.toLowerCase())) === true) {
             formJuego.className = "hide";
@@ -375,22 +425,29 @@ class SegundoJuego{
                 icon: 'success',
                 confirmButtonText: 'Siguiente',
                 color: "gray",
+                confirmButtonColor: "#ce8383",
+                allowOutsideClick: false,
                
             }).then((result) => {
-                if (result.isConfirmed) {            
+                if (result.isConfirmed) {   
+                    respJ2.value = "";
+                    respJ2.placeholder = "Apellido del personaje" ;        
                     divExplicacion2.className = "hide";
                     formContestacion1.className = "hide";
                     formJuego.className = "hide";
                     divJuego2.className = "divJuego2";
+                    Animaciones.aparecer(divJuego2);
                     pregJ2.innerText = `Ahora di el apellido de ${nom}`;
+                    
 
                     let intervaloTiempo2;
                     let tiempoEspera2;
-                    let tiempo2 = 0;
+                    let tiempo2 = 10;
+
                     temporizador2.innerText = tiempo2;
         
                     intervaloTiempo2 = setInterval(() => {
-                        tiempo2++;
+                        tiempo2--;
                         console.log(tiempo2);
                         temporizador2.innerText = tiempo2;
                         
@@ -399,88 +456,14 @@ class SegundoJuego{
                     tiempoEspera2 = setTimeout(() => {
                         clearTimeout(tiempoEspera2);
                         clearInterval(intervaloTiempo2);
-                        SegundoJuego.pedirApellido(datosPersonajes, nom);
-                        /* let apell = respJ2.value.toLowerCase();
-                        if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
-                            formJuego.className = "hide";
-                            formContestacion1.className = "hide";
-                            divJuego2.className = "hide";
-
-                            Swal.fire({
-                                title: 'Ganaste!!',
-                                text: `Es correcto! El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${apell.charAt(0).toUpperCase() + apell.slice(1)}
-                                Ganaste la segunda parte del juego`,
-                                icon: 'success',
-                                confirmButtonText: 'Fin de Juego',
-                                color: "gray",
-                               
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    FinDelJuego.mostrarPersonajes();
-                                }
-                            })              
-                        } else {
-                            formJuego.className = "hide"
-                            formContestacion1.className = "hide";
-                            divJuego2.className = "hide";
-
-                            Swal.fire({
-                                title: 'Ups... Perdiste!',
-                                text: `El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}`,
-                                icon: 'warning',
-                                confirmButtonText: 'Fin de Juego',
-                                color: "gray",
-                               
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    FinDelJuego.mostrarPersonajes();
-                                }
-                            })
-                        }      */  
+                        SegundoJuego.leerApellido(datosPersonajes, nom);
                     }, 10000)     
         
 
                     btnRJ2.addEventListener("click", () => {
                         clearTimeout(tiempoEspera2);
                         clearInterval(intervaloTiempo2);
-                        SegundoJuego.pedirApellido(datosPersonajes, nom);
-                        /* let apell = respJ2.value.toLowerCase();
-                        if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
-                            formJuego.className = "hide";
-                            formContestacion1.className = "hide";
-                            divJuego2.className = "hide";
-
-                            Swal.fire({
-                                title: 'Ganaste!!',
-                                text: `Es correcto! El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${apell.charAt(0).toUpperCase() + apell.slice(1)}
-                                Ganaste la segunda parte del juego`,
-                                icon: 'success',
-                                confirmButtonText: 'Fin de Juego',
-                                color: "gray",
-                               
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    FinDelJuego.mostrarPersonajes();
-                                }
-                            })              
-                        } else {
-                            formJuego.className = "hide"
-                            formContestacion1.className = "hide";
-                            divJuego2.className = "hide";
-
-                            Swal.fire({
-                                title: 'Ups... Perdiste!',
-                                text: `El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}`,
-                                icon: 'warning',
-                                confirmButtonText: 'Fin de Juego',
-                                color: "gray",
-                               
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    FinDelJuego.mostrarPersonajes();
-                                }
-                            })
-                        }  */                      
+                        SegundoJuego.leerApellido(datosPersonajes, nom);                   
                     })     
                 }
             })
@@ -494,6 +477,8 @@ class SegundoJuego{
                 icon: 'warning',
                 confirmButtonText: 'Fin de Juego',
                 color: "gray",
+                confirmButtonColor: "#ce8383",
+                allowOutsideClick: false,
                
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -503,12 +488,14 @@ class SegundoJuego{
         }      
     }
 
+    //INICIO DEL SEGUNDO JUEGO
     static segundoJuego() {
     
         SegundoJuego.buscarDatosPersonajes();
-        divExplicacion2.className = "divExplicacion2";
-        divResultado.className = "hide";
+         divResultado.className = "hide";
         formContestacion1.className = "hide";
+        divExplicacion2.className = "divExplicacion2";
+        Animaciones.aparecer(divExplicacion2);
         explicacion2.innerText = "Vamos a ver si te sabes algun nombre. Tienes que dar un nombre y apellido sin equivocarte."
         const datosPersonajes = (JSON.parse(sessionStorage.getItem("datosPersonajes")));
         console.log(datosPersonajes);
@@ -518,15 +505,17 @@ class SegundoJuego{
             divExplicacion2.className = "hide";
             formJuego.className = "hide";
             divJuego2.className = "divJuego2";
-            pregJ2.innerText = "Di primero un nombre:"
+            Animaciones.aparecer(divJuego2);
+            pregJ2.innerText = "Di primero un nombre:";
+            respJ2.placeholder = "Nombre del Personaje";
 
             let intervaloTiempo2;
             let tiempoEspera2;
-            let tiempo2 = 0;
+            let tiempo2 = 10;
             temporizador2.innerText = tiempo2;
 
             intervaloTiempo2 = setInterval(() => {
-                tiempo2++;
+                tiempo2--;
                 console.log(tiempo2);
                 temporizador2.innerText = tiempo2;
                 
@@ -535,186 +524,29 @@ class SegundoJuego{
             tiempoEspera2 = setTimeout(() => {
                 clearTimeout(tiempoEspera2);
                 clearInterval(intervaloTiempo2);
-                SegundoJuego.pedirNombre(datosPersonajes); 
-                /* let nom = respJ2.value;
-                if ((datosPersonajes.some(id => id.nombre.toLowerCase() === nom.toLowerCase())) === true) {
-                    formJuego.className = "hide";
-                    divJuego2.className = "hide";
-    
-                    Swal.fire({
-                        title: 'Correcto!',
-                        text: `Un personaje se llama ${nom.charAt(0).toUpperCase() + nom.slice(1)}.`,
-                        icon: 'success',
-                        confirmButtonText: 'Siguiente',
-                        color: "gray",
-                       
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            divExplicacion2.className = "hide";
-                            formContestacion1.className = "hide";
-                            formJuego.className = "hide";
-                            divJuego2.className = "divJuego2";
-                            pregJ2.innerText = `Ahora di el apellido de ${nom}`;
-    
-                            btnRJ2.addEventListener("click", () => {
-                                let apell = respJ2.value.toLowerCase();
-                                if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
-                                    formJuego.className = "hide";
-                                    formContestacion1.className = "hide";
-                                    divJuego2.className = "hide";
-    
-                                    Swal.fire({
-                                        title: 'Ganaste!!',
-                                        text: `Es correcto! El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${apell.charAt(0).toUpperCase() + apell.slice(1)}
-                                        Ganaste la segunda parte del juego`,
-                                        icon: 'success',
-                                        confirmButtonText: 'Fin de Juego',
-                                        color: "gray",
-                                       
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            FinDelJuego.mostrarPersonajes();
-                                        }
-                                    })              
-                                } else {
-                                    formJuego.className = "hide"
-                                    formContestacion1.className = "hide";
-                                    divJuego2.className = "hide";
-    
-                                    Swal.fire({
-                                        title: 'Ups... Perdiste!',
-                                        text: `El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}`,
-                                        icon: 'warning',
-                                        confirmButtonText: 'Fin de Juego',
-                                        color: "gray",
-                                       
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            FinDelJuego.mostrarPersonajes();
-                                        }
-                                    })
-                                }                       
-                            })     
-                        }
-                    })
-                } else { 
-                    formJuego.className = "hide";
-                    formContestacion1.className = "hide";
-                    divJuego2.className = "hide";
-                    Swal.fire({
-                        title: 'Ups... Te equivocaste.',
-                        text: `No existe ningun personajes con ese nombre`,
-                        icon: 'warning',
-                        confirmButtonText: 'Fin de Juego',
-                        color: "gray",
-                       
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            FinDelJuego.mostrarPersonajes();
-                        }
-                    })                                          
-                }    
-                 */
+                SegundoJuego.leerNombre(datosPersonajes); 
             }, 10000)     
 
 
             btnRJ2.addEventListener("click", () => {
                 clearTimeout(tiempoEspera2);
                 clearInterval(intervaloTiempo2); 
-                SegundoJuego.pedirNombre(datosPersonajes); 
-                /* let nom = respJ2.value;
-                if ((datosPersonajes.some(id => id.nombre.toLowerCase() === nom.toLowerCase())) === true) {
-                    formJuego.className = "hide";
-                    divJuego2.className = "hide";
-    
-                    Swal.fire({
-                        title: 'Correcto!',
-                        text: `Un personaje se llama ${nom.charAt(0).toUpperCase() + nom.slice(1)}.`,
-                        icon: 'success',
-                        confirmButtonText: 'Siguiente',
-                        color: "gray",
-                       
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            divExplicacion2.className = "hide";
-                            formContestacion1.className = "hide";
-                            formJuego.className = "hide";
-                            divJuego2.className = "divJuego2";
-                            pregJ2.innerText = `Ahora di el apellido de ${nom}`;
-    
-                            btnRJ2.addEventListener("click", () => {
-                                let apell = respJ2.value.toLowerCase();
-                                if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
-                                    formJuego.className = "hide";
-                                    formContestacion1.className = "hide";
-                                    divJuego2.className = "hide";
-    
-                                    Swal.fire({
-                                        title: 'Ganaste!!',
-                                        text: `Es correcto! El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${apell.charAt(0).toUpperCase() + apell.slice(1)}
-                                        Ganaste la segunda parte del juego`,
-                                        icon: 'success',
-                                        confirmButtonText: 'Fin de Juego',
-                                        color: "gray",
-                                       
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            FinDelJuego.mostrarPersonajes();
-                                        }
-                                    })              
-                                } else {
-                                    formJuego.className = "hide"
-                                    formContestacion1.className = "hide";
-                                    divJuego2.className = "hide";
-    
-                                    Swal.fire({
-                                        title: 'Ups... Perdiste!',
-                                        text: `El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${(datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido}`,
-                                        icon: 'warning',
-                                        confirmButtonText: 'Fin de Juego',
-                                        color: "gray",
-                                       
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            FinDelJuego.mostrarPersonajes();
-                                        }
-                                    })
-                                }                       
-                            })     
-                        }
-                    })
-                } else { 
-                    formJuego.className = "hide";
-                    formContestacion1.className = "hide";
-                    divJuego2.className = "hide";
-                    Swal.fire({
-                        title: 'Ups... Te equivocaste.',
-                        text: `No existe ningun personajes con ese nombre`,
-                        icon: 'warning',
-                        confirmButtonText: 'Fin de Juego',
-                        color: "gray",
-                       
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            FinDelJuego.mostrarPersonajes();
-                        }
-                    })                                          
-                }    */
+                SegundoJuego.leerNombre(datosPersonajes); 
             })
         })
     }     
 }
 
 
+
+//--------------------------------------------------FIN DEL JUEGO
 class FinDelJuego{
-    constructor() {
-
-    }
-
+    //MOSTRAR PRESONAJES
     static mostrarPersonajes() {
         let titulo = document.createElement("h3");
         titulo.innerText = "La lista de personajes es:"
         divMostrarPersonajes.className = "divMostrarPersonajes";
+        Animaciones.entrar(divMostrarPersonajes);
         divMostrarPersonajes.append(titulo);
         for ( const datosPersonaje of (JSON.parse(sessionStorage.getItem("datosPersonajes")))) {
             const {nombre, apellido} = datosPersonaje;
@@ -726,12 +558,14 @@ class FinDelJuego{
 }
 
  
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
-//INCIO DEL JUEGO
 
+//-------------------------------------------------------------------------PROGRAMACION
+//PANTALLA INICIAL
 Introduccion.mostrarPantallaInicio();
 
-
+//ESCUCHAR BOTON JUGAR
 btnJugar.addEventListener(`click`, (e) => {
     e.preventDefault();
     Introduccion.nombreParticipante()

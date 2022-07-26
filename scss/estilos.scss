@@ -137,7 +137,11 @@
                 margin-top: 2rem;
             }
 
-        #temporizador1{
+            #barraTiempo1{
+                background-color: red;
+            }
+
+            #temporizador1{
                 background-color: rgb(240, 134, 134);
                 padding: 20px;
                 border-radius: 100px;
@@ -150,6 +154,8 @@
         //JUEGO 2
         .divJuego2{
             @include flexCenter;
+            position: relative;
+            
 
             #temporizador2{
                 background-color: rgb(240, 134, 134);
