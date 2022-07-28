@@ -2,11 +2,26 @@
 //---------------------------------------------------------------------------------OBTENCION DE HTML
 
 
+
 //-----------------------------------------------------------------PANTANLLA DE INICIO
 
+//HEADER
+const txtTitulo = document.getElementById("txtTitulo");
+const txtFrase = document.getElementById("txtFrase");
+const navBotones = document.getElementById("navBotones")
+const btnJugar1 = document.getElementById("btnJugar1");
+const btnExplicacion = document.getElementById("btnExplicacion");
+
+//----------------------------EXPLICACION
+const divExplicacionJuego = document.getElementById("divExplicacionJuego");
+const btnJugar2 = document.getElementById("btnJugar2");
+const btnSalirExplicacion = document.getElementById("btnSalirExplicacion");
+
+
 //---------------------------DAR INICIO AL JUEGO
-const btnJugar = document.getElementById("btnJugar");
+const btnJugar0 = document.getElementById("btnJugar0");
 const divJugar = document.getElementById("divJugar");
+
 //---------------------------SALUDAR
 const divSaludo = document.getElementById("divSaludo");
 const elementoNombre = document.getElementById("nombre");
@@ -52,7 +67,10 @@ const pregJ2 = document.getElementById("pregJ2");
 
 //-------------------------------------------------FINALIZACION DEL JUEGO
 //------------------------MOSTRAR PERSONAJES
-const divMostrarPersonajes = document.getElementById("divMostrarPersonajes"); 
+const divMostrarPersonajes = document.getElementById("divMostrarPersonajes");
+const txtMostrarPersonajes = document.getElementById("txtMostrarPersonajes");
+const btnInicio = document.getElementById("btnInicio");
+const btnJugar3 = document.getElementById("btnJugar3");
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -92,7 +110,8 @@ class Animaciones {
 
     static agrandar(element){
         element.animate([
-            {transform: "scale(0.8,1)"}
+            {transform: "scale(0.8)"},
+            {transform: "scale(1)"}
         ], {
             iterations: 1,
             easing: "ease-in-out",
@@ -112,11 +131,22 @@ class Animaciones {
         )}
 }
 
+//-------------------------------------------------EXPLIACION JUEGO ENTERO
+
+class ExplicacionEntera {
+    static mostrarExplicacion(){
+        divJugar.className = "hide";
+        divSaludo.className = "hide";
+        divExplicacionJuego.className = "divExplicacionJuego";
+    }
+}
+
 //------------------------------------------------ INICIO DEL JUEGO
 class Introduccion {
     //MOSTRAR PANTALLA DE INCIO DE JUEGO
     static mostrarPantallaInicio(){
         divJugar.className ="divJugar";
+        navBotones.className = "navBotones";
         divSaludo.className = "hide";
         divExplicacion1.className ="hide" ;
         formContestacion1.className = "hide";
@@ -125,12 +155,17 @@ class Introduccion {
         formJuego.className = "hide";
         divJuego2.className = "hide";
         divMostrarPersonajes.className = "hide";
+        divExplicacionJuego.className = "hide";
     }
 
 
     //PEDIR NOMBRE AL PARTICIPANTE
-    static nombreParticipante () {    
+    static nombreParticipante () {
+        divMostrarPersonajes.className = "hide";
+        navBotones.className = "hide";
+
         if (!!localStorage.getItem("nombreParticipante")) {
+            divExplicacionJuego.className = "hide";
             divJugar.className = "hide";
             divSaludo.className = "divSaludo";
             Animaciones.agrandar(divSaludo);
@@ -145,6 +180,7 @@ class Introduccion {
         } else {    
             divJugar.className = "hide";
             divSaludo.className = "divSaludo";
+            divExplicacionJuego.className = "hide";
 
             divSaludo.addEventListener(`submit`, (e) => {
                 e.preventDefault();
@@ -492,7 +528,7 @@ class SegundoJuego{
     static segundoJuego() {
     
         SegundoJuego.buscarDatosPersonajes();
-         divResultado.className = "hide";
+        divMostrarPersonajes.className = "hide";
         formContestacion1.className = "hide";
         divExplicacion2.className = "divExplicacion2";
         Animaciones.aparecer(divExplicacion2);
@@ -506,6 +542,7 @@ class SegundoJuego{
             formJuego.className = "hide";
             divJuego2.className = "divJuego2";
             Animaciones.aparecer(divJuego2);
+            respJ2.value = "";
             pregJ2.innerText = "Di primero un nombre:";
             respJ2.placeholder = "Nombre del Personaje";
 
@@ -543,16 +580,18 @@ class SegundoJuego{
 class FinDelJuego{
     //MOSTRAR PRESONAJES
     static mostrarPersonajes() {
+        divMostrarPersonajes.className = "divMostrarPersonajes";
+        txtMostrarPersonajes.innerHTML = "";
         let titulo = document.createElement("h3");
         titulo.innerText = "La lista de personajes es:"
-        divMostrarPersonajes.className = "divMostrarPersonajes";
+        txtMostrarPersonajes.className = "txtMostrarPersonajes";
         Animaciones.entrar(divMostrarPersonajes);
-        divMostrarPersonajes.append(titulo);
+        txtMostrarPersonajes.append(titulo);
         for ( const datosPersonaje of (JSON.parse(sessionStorage.getItem("datosPersonajes")))) {
             const {nombre, apellido} = datosPersonaje;
             let personaje = document.createElement("h5");
             personaje.innerText = `--- ${nombre} ${apellido}`
-            divMostrarPersonajes.append(personaje);
+            txtMostrarPersonajes.append(personaje);
         }
     }
 }
@@ -565,12 +604,32 @@ class FinDelJuego{
 //PANTALLA INICIAL
 Introduccion.mostrarPantallaInicio();
 
-//ESCUCHAR BOTON JUGAR
-btnJugar.addEventListener(`click`, (e) => {
-    e.preventDefault();
-    Introduccion.nombreParticipante()
+//ESCUCHAR BOTONES JUGAR
+for(let i = 0; i < 4; i++){
+    let btnJugar = document.getElementById(`btnJugar${i}`)
+    btnJugar.addEventListener("click", (e) => {
+        e.preventDefault();
+        Introduccion.nombreParticipante();
+    })
+}
 
+
+btnExplicacion.addEventListener("click", (e) =>{
+    e.preventDefault();
+    ExplicacionEntera.mostrarExplicacion();
 })
+
+btnSalirExplicacion.addEventListener("click", (e) => {
+    e.preventDefault();
+    Introduccion.mostrarPantallaInicio();
+})
+
+btnInicio.addEventListener("click", (e) => {
+    e.preventDefault();
+    Introduccion.mostrarPantallaInicio();
+})
+
+
 
 
 

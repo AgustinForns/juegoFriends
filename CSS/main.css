@@ -13,10 +13,17 @@
     background-color: #d8c6c6;
     display: flex;
     flex-direction: column;
-    align-items: center; }
-    .contenedor header nav ul li {
+    align-items: center;
+    justify-content: center; }
+    .contenedor header .divTitulos {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem; }
+    .contenedor header .navBotones ul li {
       display: inline-block; }
-      .contenedor header nav ul li a {
+      .contenedor header .navBotones ul li button {
         text-decoration: none;
         display: inline-block;
         background-color: gray;
@@ -25,6 +32,8 @@
         font-size: 20px;
         margin: 10px;
         padding: 10px; }
+    .contenedor header .hide {
+      display: none; }
   .contenedor main {
     grid-area: main;
     background-color: antiquewhite;
@@ -35,14 +44,30 @@
     align-items: center;
     font-size: 2rem;
     padding: 50px 10px 50px 10px; }
+    .contenedor main .divExplicacionJuego {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem; }
+      .contenedor main .divExplicacionJuego #btnsExplicacion {
+        display: flex;
+        flex-direction: row; }
+        .contenedor main .divExplicacionJuego #btnsExplicacion button {
+          font-size: 2rem;
+          background-color: #ce8383;
+          border-radius: 0.7rem;
+          padding: 0.5rem;
+          margin-left: 15px;
+          margin-right: 15px; }
     .contenedor main .divJugar {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 2rem;
+      font-size: 1.5rem;
       margin: 2rem; }
-      .contenedor main .divJugar #btnJugar {
+      .contenedor main .divJugar #btnJugar0 {
         animation-name: aparecer;
         animation-iteration-count: infinite;
         animation-duration: 1s;
@@ -63,7 +88,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 2rem;
+      font-size: 1.5rem;
       border: black 2px solid;
       padding: 10px; }
       .contenedor main .divSaludo #nombre {
@@ -79,7 +104,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 2rem;
+      font-size: 1.5rem;
       margin: 2rem; }
       .contenedor main .divExplicacion1 #btnExplicacion1 {
         font-size: 2rem;
@@ -91,7 +116,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 2rem;
+      font-size: 1.5rem;
       margin: 2rem; }
       .contenedor main .divExplicacion2 #btnExplicacion2 {
         font-size: 2rem;
@@ -103,7 +128,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 2rem;
+      font-size: 1.5rem;
       margin: 2rem; }
       .contenedor main .formContestacion1 #btnContestacion1 {
         font-size: 2rem;
@@ -115,7 +140,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 2rem; }
+      font-size: 1.5rem; }
       .contenedor main .formJuego #btnRJ1 {
         font-size: 2rem;
         background-color: #ce8383;
@@ -135,7 +160,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 2rem;
+      font-size: 1.5rem;
       position: relative; }
       .contenedor main .divJuego2 #temporizador2 {
         background-color: #f08686;
@@ -156,16 +181,27 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 2rem; }
-      .contenedor main .divMostrarPersonajes h5 {
-        margin: 0.1rem; }
-    .contenedor main .divResultado {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 2rem;
-      margin: 2rem; }
+      font-size: 1.5rem; }
+      .contenedor main .divMostrarPersonajes .txtMostrarPersonajes {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem; }
+        .contenedor main .divMostrarPersonajes .txtMostrarPersonajes h3 {
+          font-size: 35px; }
+        .contenedor main .divMostrarPersonajes .txtMostrarPersonajes h5 {
+          margin: 0.1rem;
+          font-size: 30px; }
+      .contenedor main .divMostrarPersonajes div {
+        margin-top: 30px; }
+        .contenedor main .divMostrarPersonajes div button {
+          font-size: 2rem;
+          background-color: #ce8383;
+          border-radius: 0.7rem;
+          padding: 0.5rem;
+          margin-left: 20px;
+          margin-right: 20px; }
     .contenedor main .hide {
       display: none; }
   .contenedor .video {
@@ -201,15 +237,16 @@
       display: flex;
       flex-direction: column;
       align-items: center; }
-      .contenedor header nav ul li {
-        display: inline-block; }
-        .contenedor header nav ul li a {
+      .contenedor header .navBotones ul {
+        display: flex;
+        flex-direction: row; }
+        .contenedor header .navBotones ul li button {
           text-decoration: none;
           display: inline-block;
           background-color: gray;
           color: black;
           border-radius: 50px;
-          font-size: 20px;
+          font-size: 40px;
           margin: 10px;
           padding: 10px; }
     .contenedor main {
@@ -221,14 +258,30 @@
       align-content: center;
       align-items: center;
       font-size: 2rem; }
+      .contenedor main .divExplicacionJuego {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem; }
+        .contenedor main .divExplicacionJuego #btnsExplicacion {
+          display: flex;
+          flex-direction: row; }
+          .contenedor main .divExplicacionJuego #btnsExplicacion button {
+            font-size: 2rem;
+            background-color: #ce8383;
+            border-radius: 0.7rem;
+            padding: 0.5rem;
+            margin-left: 15px;
+            margin-right: 15px; }
       .contenedor main .divJugar {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin: 2rem; }
-        .contenedor main .divJugar #btnJugar {
+        .contenedor main .divJugar #btnJugar0 {
           width: fit-content;
           margin-top: 2rem;
           font-size: 2rem;
@@ -240,7 +293,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 2rem;
+        font-size: 1.5rem;
         border: black 2px solid;
         padding: 10px; }
         .contenedor main .divSaludo #nombre {
@@ -256,7 +309,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin: 2rem; }
         .contenedor main .divExplicacion1 #btnExplicacion1 {
           font-size: 2rem;
@@ -268,7 +321,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin: 2rem; }
         .contenedor main .formContestacion1 #btnContestacion1 {
           font-size: 2rem;
@@ -280,7 +333,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 2rem; }
+        font-size: 1.5rem; }
         .contenedor main .formJuego #btnRJ1 {
           font-size: 2rem;
           background-color: #ce8383;
@@ -292,7 +345,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 2rem; }
+        font-size: 1.5rem; }
         .contenedor main .divJuego2 #btnRJ2 {
           font-size: 2rem;
           background-color: #ce8383;
@@ -306,7 +359,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 2rem; }
+        font-size: 1.5rem; }
         .contenedor main .divMostrarPersonajes h5 {
           margin: 0.1rem; }
       .contenedor main .divResultado {
@@ -314,7 +367,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin: 2rem; }
       .contenedor main .hide {
         display: none; }

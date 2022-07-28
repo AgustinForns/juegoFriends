@@ -11,24 +11,41 @@
 <body class="contenedor">
     <header>
 
-        <h1>Bienvenido a QuienSabeMasFriends</h1>
-        <h3>¡Pero ellos no saben que nosotros sabemos que saben que sabemos!</h3>
+        <div id="divTitulos" class="divTitulos">
+            <h1 id="txtTitulo">Bienvenido a QuienSabeMasFriends</h1>
+            <h3 id="txtFrase">¡Pero ellos no saben que nosotros sabemos que saben que sabemos!</h3>
+        </div>
 
-        <nav>
+        <nav id="navBotones" class="navBotones">
             <ul>
-                <li><a href="index.html">Juego</a></li>
-                <li><a href="index.html">Explicacón</a></li>
+                <li><button id="btnJugar1" >Juego</button></li>
+                <li><button id="btnExplicacion" >Explicación</button></li>
             </ul>
         </nav>
 
     </header>
 
     <main>
-        
+        <!-- EXPLIACION -->
+        <div id="divExplicacionJuego" class="divExplicacionJuego">
+            <div>
+                <h3>Juego 1</h3>
+                <p>Te van a hacer una pregunta y vas a tener que elegir entre 3 opciones. Vas a tener 5 segundos para elegir una opciòn. Caso contrario se considera incorrecta la respuesta</p>
+            </div>
+            <div>
+                <h3>Juego 2</h3>
+                <p>Te van a pedir que des un nombrer de uno de los cinco personajes principales. Si este coincicide con calguno de estos, se te pedirà el apellido.</p>
+            </div>
+            <div id="btnsExplicacion">
+                <button id="btnJugar2">Jugar</button>
+                <button id="btnSalirExplicacion">Salir</button>
+            </div>
+        </div>
+
         <!-- INICIO DEL JUEGO -->
         <div id="divJugar" class="divJugar">
             <h3>Animaté y descubre que tanto sabes de la imperdible serie Friends</h3>
-            <button id="btnJugar" class="botones">Juega ahora!</button>
+            <button id="btnJugar0" class="botones">Juega ahora!</button>
         </div>
 
         <!-- INGRESAR NOMBRE -->
@@ -90,13 +107,18 @@
         <!-- MOSTRAR PERSONAJES-->
 
         <div id="divMostrarPersonajes" class="divMostrarPersonajes">
+            <div id="txtMostrarPersonajes" class="txtMostrarPersonajes">
+                
+            </div>
+            <div>
+                <button id="btnInicio">Inicio</button>
+                <button id="btnJugar3" >Volver a jugar</button>
+            </div>
+            
 
         </div>
       
-        <!-- RESULTADO FINAL DEL JUEGO -->
-        <div id="divResultado" class="divResultado">
-            <p id="resultado"></p>
-        </div>
+     
         
     </main>
 
