@@ -157,8 +157,7 @@ class EscucharBotonesIntroduccion{
             location.reload()
         })    
     }   
-    
-    
+       
     
     static listenBtnExplicacion(){
         btnExplicacion.addEventListener("click", (e) =>{
@@ -264,9 +263,7 @@ class PrimerJuego {
             let correctas = 0;
             let incorrectas = 0;
             let index = 0;
-            PrimerJuego.preguntas(correctas, incorrectas, index);
-        
-            
+            PrimerJuego.preguntas(correctas, incorrectas, index);         
         })
     
     }
@@ -321,11 +318,8 @@ class PrimerJuego {
     static preguntas = (corr, incorr, index) => {
         
         if (index < 5 && corr < 3 && incorr < 3 ) {
-            formJuego.className = `formJuego`;
-            
+            formJuego.className = `formJuego`;           
             Animaciones.aparecer(formJuego);
-    
-
             let tiempoEspera;
             let intervaloTiempo;
             let tiempo = 5;
@@ -357,8 +351,6 @@ class PrimerJuego {
                 PrimerJuego.analisisRespuesta(opciones, corr, incorr, preguntasRespuestasMix, index)
             }, 5000) 
 
-    
-
             formJuego.addEventListener("submit", (e) => {
                 e.preventDefault();
                 clearTimeout(tiempoEspera);
@@ -366,8 +358,6 @@ class PrimerJuego {
                 PrimerJuego.analisisRespuesta(opciones, corr, incorr, preguntasRespuestasMix, index);
             }) 
             
-            
-    
         } else {
             clearTimeout(PrimerJuego.tiempoEspera);
             clearInterval(PrimerJuego.intervaloTiempo);
@@ -412,20 +402,21 @@ class PrimerJuego {
 class SegundoJuego{
     //BUSCAR LOS DATOS DE PERSONAJES DEL ARCHIVO .JSON
     static buscarDatosPersonajes(){
-        fetch(URLdatosPersonajes)
-        .then( (res) => {
-
-            return res.json();
-        }).then(datosPersonaje => {
-            localStorage.setItem("datosPersonajes", JSON.stringify(datosPersonaje));
-
-        })
-        .catch (() => {
-            Introduccion.mostrarPantallaInicio();
-        })
-        .finally(() => {
-
-        })
+        if (!!localStorage.getItem("datosPersonajes")){
+        } else {
+            fetch(URLdatosPersonajes)
+            .then( (res) => {
+                return res.json();
+            }).then(datosPersonaje => {
+                localStorage.setItem("datosPersonajes", JSON.stringify(datosPersonaje));
+            })
+            .catch (() => {
+                Introduccion.mostrarPantallaInicio();
+            })
+            .finally(() => {
+    
+            })   
+        }       
     }
 
     //DETERMINAR SI EL APELLIDO INGRESADO ES CORRECTO
@@ -596,22 +587,43 @@ class SegundoJuego{
 class FinDelJuego{
     //MOSTRAR PRESONAJES
     static mostrarPersonajes() {
-        SegundoJuego.buscarDatosPersonajes();
+        if (!!localStorage.getItem("datosPersonajes")) {
+            FinDelJuego.mostrarPersonaje();
+        } else {
+            fetch(URLdatosPersonajes)
+            .then( (res) => {
+                return res.json();
+            }).then(datosPersonaje => {
+                localStorage.setItem("datosPersonajes", JSON.stringify(datosPersonaje));
+            })
+            .catch (() => {
+                Introduccion.mostrarPantallaInicio();
+            })
+            .finally(() => {
+                FinDelJuego.mostrarPersonaje();
+            })       
+            
+            
+        }
+    }
+
+    static mostrarPersonaje(){
         divMostrarPersonajes.className = "divMostrarPersonajes";
         txtMostrarPersonajes.innerHTML = "";
         let titulo = document.createElement("h3");
-        titulo.innerText = "La lista de personajes es:"
+        titulo.innerText = "Dato curioso - El nombre y apellido de uno de los cinco personajes es:"
         txtMostrarPersonajes.className = "txtMostrarPersonajes";
         Animaciones.entrar(divMostrarPersonajes);
         txtMostrarPersonajes.append(titulo);
-        for ( const datosPersonaje of (JSON.parse(localStorage.getItem("datosPersonajes")))) {
-            const {nombre, apellido} = datosPersonaje;
-            let personaje = document.createElement("h5");
-            personaje.innerText = `--- ${nombre} ${apellido}`
-            txtMostrarPersonajes.append(personaje);
-        }
+        let datosPersonajes = JSON.parse(localStorage.getItem("datosPersonajes"));
+        let random = Math.floor((Math.random() * ((datosPersonajes.length)-0)) +0);
+        const {nombre, apellido} = (datosPersonajes)[random];
+        let personaje = document.createElement("h5");
+        personaje.innerText = `--- ${nombre} ${apellido}`
+        txtMostrarPersonajes.append(personaje);    
     }
 }
+
 
  
 //----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -622,7 +634,7 @@ class FinDelJuego{
 //PANTALLA INICIAL
 Introduccion.mostrarPantallaInicio();
 
-//ESCUCHAR BOTONES JUGAR
+//ESCUCHAR BOTONES 
 
 EscucharBotonesIntroduccion.listenBtnJugar();
 EscucharBotonesIntroduccion.listenBtnSalir();
