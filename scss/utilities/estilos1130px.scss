@@ -5,7 +5,7 @@
         grid-template-rows: 3fr 6fr 1fr;
         grid-template-columns: 55% 45%;
         grid-template-areas: "header header" 
-                            "main video" 
+                            "main fotoFriends" 
                             "footer footer";
         
         padding: 0;
@@ -26,10 +26,12 @@
                 ul{
                     display: flex;
                     flex-direction: row;
+                    list-style: none;   
                     li{
                         
                         button{     
-                            text-decoration: none;                 
+                            text-decoration: none;
+                            list-style: none;              
                             display: inline-block;
                             background-color: gray;
                             color: black;
@@ -172,16 +174,15 @@
             
         }
 
-        .video{
-            grid-area: video;
-            /* background-image: url('../img/introduccion.jpg');
+        .fotoFriends{
+            grid-area: fotoFriends;
+            background-image: url('../img/introduccion.jpg');
             background-repeat: no-repeat;
             background-size: cover;
-                */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+           div{
+            display: none;
+           }
+            
             
         }    
         footer{

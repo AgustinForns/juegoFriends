@@ -48,9 +48,6 @@ const resp3 = document.getElementById("resp3");
 const formContestacion1 = document.getElementById("formContestacion1");
 const contestacion1 = document.getElementById("contestacion1");
 
-const barraTiempo1 = document.getElementById("barraTiempo1");
-
-
 //---------------------------------------------------JUEGO2
 //--------------------------EXPLICACION DEL JUEGO
 const divExplicacion2 = document.getElementById("divExplicacion2");
@@ -69,8 +66,7 @@ const pregJ2 = document.getElementById("pregJ2");
 //------------------------MOSTRAR PERSONAJES
 const divMostrarPersonajes = document.getElementById("divMostrarPersonajes");
 const txtMostrarPersonajes = document.getElementById("txtMostrarPersonajes");
-const btnInicio = document.getElementById("btnInicio");
-const btnJugar3 = document.getElementById("btnJugar3");
+const volverJugar = document.getElementById("volverJugar");
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -131,7 +127,7 @@ class Animaciones {
         )}
 }
 
-//-------------------------------------------------EXPLIACION JUEGO ENTERO
+//-------------------------------------------------EXPLICACION JUEGO ENTERO
 
 class ExplicacionEntera {
     static mostrarExplicacion(){
@@ -141,17 +137,56 @@ class ExplicacionEntera {
     }
 }
 
+//-------------------------------------------------ESCUCHAR BOTONES PANTALLAS INICIALES
+
+class EscucharBotonesIntroduccion{
+
+    static listenBtnJugar(){
+        for(let i = 0; i < 3; i++){
+            let btnJugar = document.getElementById(`btnJugar${i}`)
+            btnJugar.addEventListener("click", (e) => {
+                e.preventDefault();
+                Introduccion.nombreParticipante();
+                })
+            }
+        } 
+
+    static listenBtnVolverJugar(){
+        volverJugar.addEventListener("click", (e) => {
+            e.preventDefault();
+            location.reload()
+        })    
+    }   
+    
+    
+    
+    static listenBtnExplicacion(){
+        btnExplicacion.addEventListener("click", (e) =>{
+        e.preventDefault();
+        ExplicacionEntera.mostrarExplicacion();
+    })
+    }
+     
+    static listenBtnSalir(){     
+        btnSalirExplicacion.addEventListener("click", (e) => {
+            e.preventDefault();
+            Introduccion.mostrarPantallaInicio();
+        })
+    }
+  
+}
+
 //------------------------------------------------ INICIO DEL JUEGO
 class Introduccion {
     //MOSTRAR PANTALLA DE INCIO DE JUEGO
     static mostrarPantallaInicio(){
+       
         divJugar.className ="divJugar";
         navBotones.className = "navBotones";
         divSaludo.className = "hide";
         divExplicacion1.className ="hide" ;
         formContestacion1.className = "hide";
         divExplicacion2.className ="hide" ;
-        formContestacion1.className = "hide";
         formJuego.className = "hide";
         divJuego2.className = "hide";
         divMostrarPersonajes.className = "hide";
@@ -203,15 +238,13 @@ class PrimerJuego {
 
         fetch(URLpreguntasYrespuetsas)
         .then((res) => {
-            console.log(res);
             return res.json();
         }).then(preguntasRespuestas => {
             const preguntasRespuestasMezcladas = preguntasRespuestas.sort(() => Math.random() - 0.5);
-            sessionStorage.setItem("preguntasMezcladas", JSON.stringify(preguntasRespuestasMezcladas));
-            console.log(preguntasRespuestasMezcladas)
+            localStorage.setItem("preguntasMezcladas", JSON.stringify(preguntasRespuestasMezcladas));
         })
         .catch(() => {
-            console.log("error");
+            Introduccion.mostrarPantallaInicio();
         })
         .finally(() => {
             
@@ -288,14 +321,7 @@ class PrimerJuego {
     static preguntas = (corr, incorr, index) => {
         
         if (index < 5 && corr < 3 && incorr < 3 ) {
-            formContestacion1.className = "hide";
             formJuego.className = `formJuego`;
-
-         /*    formJuego.animate({
-                opacity: [ 0, 0.9, 1 ],
-                offset: [ 0, 0.8 ],
-                easing: [ 'ease-in', 'ease-out' ],
-              }, 500); */
             
             Animaciones.aparecer(formJuego);
     
@@ -306,8 +332,7 @@ class PrimerJuego {
             temporizador1.innerText = tiempo;
             index++;
             let opciones = [];
-            const preguntasRespuestasMix =(JSON.parse(sessionStorage.getItem("preguntasMezcladas")));
-            console.log(preguntasRespuestasMix[index]);
+            const preguntasRespuestasMix =(JSON.parse(localStorage.getItem("preguntasMezcladas")));
             pregunta.innerText = preguntasRespuestasMix[index].pregunta;
             opcion1.innerText = preguntasRespuestasMix[index].opciones[0].resp;
             opcion2.innerText = preguntasRespuestasMix[index].opciones[1].resp;
@@ -322,7 +347,6 @@ class PrimerJuego {
             
             intervaloTiempo = setInterval(() => {
                 tiempo--;
-                console.log(tiempo)
                 temporizador1.innerText = tiempo;
                 
             }, 1000);
@@ -346,6 +370,7 @@ class PrimerJuego {
     
         } else {
             clearTimeout(PrimerJuego.tiempoEspera);
+            clearInterval(PrimerJuego.intervaloTiempo);
             PrimerJuego.resumenJuego1(corr, incorr);
         }
     }
@@ -356,7 +381,7 @@ class PrimerJuego {
         formJuego.className = "hide";
         formContestacion1.className = "formContestacion1";
         Animaciones.rotar(formContestacion1);
-        contestacion1.innerText = `Como resultado obtuviste ${corr} respuestas correctas y ${incorr} respuestas incorrectas`
+        contestacion1.innerText = `Como resultado obtuviste ${corr} respuestas correctas y ${incorr} respuestas incorrectas`;
         formContestacion1.addEventListener("submit", (e) => {
             e.preventDefault();
             if (corr > 2) {
@@ -389,14 +414,14 @@ class SegundoJuego{
     static buscarDatosPersonajes(){
         fetch(URLdatosPersonajes)
         .then( (res) => {
-            console.log(res);
+
             return res.json();
         }).then(datosPersonaje => {
-            sessionStorage.setItem("datosPersonajes", JSON.stringify(datosPersonaje));
-            console.log(datosPersonaje);
+            localStorage.setItem("datosPersonajes", JSON.stringify(datosPersonaje));
+
         })
         .catch (() => {
-            console.log("error");
+            Introduccion.mostrarPantallaInicio();
         })
         .finally(() => {
 
@@ -407,8 +432,6 @@ class SegundoJuego{
     static leerApellido(datosPersonajes, nom){
         let apell = respJ2.value.toLowerCase();
         if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
-            formJuego.className = "hide";
-            formContestacion1.className = "hide";
             divJuego2.className = "hide";
 
             Swal.fire({
@@ -427,8 +450,7 @@ class SegundoJuego{
                 }
             })              
         } else {
-            formJuego.className = "hide"
-            formContestacion1.className = "hide";
+
             divJuego2.className = "hide";
 
             Swal.fire({
@@ -469,8 +491,6 @@ class SegundoJuego{
                     respJ2.value = "";
                     respJ2.placeholder = "Apellido del personaje" ;        
                     divExplicacion2.className = "hide";
-                    formContestacion1.className = "hide";
-                    formJuego.className = "hide";
                     divJuego2.className = "divJuego2";
                     Animaciones.aparecer(divJuego2);
                     pregJ2.innerText = `Ahora di el apellido de ${nom}`;
@@ -484,7 +504,6 @@ class SegundoJuego{
         
                     intervaloTiempo2 = setInterval(() => {
                         tiempo2--;
-                        console.log(tiempo2);
                         temporizador2.innerText = tiempo2;
                         
                     }, 1000);
@@ -504,8 +523,6 @@ class SegundoJuego{
                 }
             })
         } else { 
-            formJuego.className = "hide";
-            formContestacion1.className = "hide";
             divJuego2.className = "hide";
             Swal.fire({
                 title: 'Ups... Te equivocaste.',
@@ -531,15 +548,15 @@ class SegundoJuego{
         divMostrarPersonajes.className = "hide";
         formContestacion1.className = "hide";
         divExplicacion2.className = "divExplicacion2";
+        divMostrarPersonajes.className = "hide";
         Animaciones.aparecer(divExplicacion2);
         explicacion2.innerText = "Vamos a ver si te sabes algun nombre. Tienes que dar un nombre y apellido sin equivocarte."
-        const datosPersonajes = (JSON.parse(sessionStorage.getItem("datosPersonajes")));
-        console.log(datosPersonajes);
+        const datosPersonajes = (JSON.parse(localStorage.getItem("datosPersonajes")));
+    
 
         divExplicacion2.addEventListener("submit", (e) => {
             e.preventDefault();
             divExplicacion2.className = "hide";
-            formJuego.className = "hide";
             divJuego2.className = "divJuego2";
             Animaciones.aparecer(divJuego2);
             respJ2.value = "";
@@ -553,7 +570,6 @@ class SegundoJuego{
 
             intervaloTiempo2 = setInterval(() => {
                 tiempo2--;
-                console.log(tiempo2);
                 temporizador2.innerText = tiempo2;
                 
             }, 1000);
@@ -580,6 +596,7 @@ class SegundoJuego{
 class FinDelJuego{
     //MOSTRAR PRESONAJES
     static mostrarPersonajes() {
+        SegundoJuego.buscarDatosPersonajes();
         divMostrarPersonajes.className = "divMostrarPersonajes";
         txtMostrarPersonajes.innerHTML = "";
         let titulo = document.createElement("h3");
@@ -587,7 +604,7 @@ class FinDelJuego{
         txtMostrarPersonajes.className = "txtMostrarPersonajes";
         Animaciones.entrar(divMostrarPersonajes);
         txtMostrarPersonajes.append(titulo);
-        for ( const datosPersonaje of (JSON.parse(sessionStorage.getItem("datosPersonajes")))) {
+        for ( const datosPersonaje of (JSON.parse(localStorage.getItem("datosPersonajes")))) {
             const {nombre, apellido} = datosPersonaje;
             let personaje = document.createElement("h5");
             personaje.innerText = `--- ${nombre} ${apellido}`
@@ -601,33 +618,17 @@ class FinDelJuego{
 
 
 //-------------------------------------------------------------------------PROGRAMACION
+
 //PANTALLA INICIAL
 Introduccion.mostrarPantallaInicio();
 
 //ESCUCHAR BOTONES JUGAR
-for(let i = 0; i < 4; i++){
-    let btnJugar = document.getElementById(`btnJugar${i}`)
-    btnJugar.addEventListener("click", (e) => {
-        e.preventDefault();
-        Introduccion.nombreParticipante();
-    })
-}
 
+EscucharBotonesIntroduccion.listenBtnJugar();
+EscucharBotonesIntroduccion.listenBtnSalir();
+EscucharBotonesIntroduccion.listenBtnExplicacion();
+EscucharBotonesIntroduccion.listenBtnVolverJugar();
 
-btnExplicacion.addEventListener("click", (e) =>{
-    e.preventDefault();
-    ExplicacionEntera.mostrarExplicacion();
-})
-
-btnSalirExplicacion.addEventListener("click", (e) => {
-    e.preventDefault();
-    Introduccion.mostrarPantallaInicio();
-})
-
-btnInicio.addEventListener("click", (e) => {
-    e.preventDefault();
-    Introduccion.mostrarPantallaInicio();
-})
 
 
 

@@ -8,7 +8,7 @@
     grid-template-columns: 55% 45%;
     grid-template-areas: "header header" 
                         "main main"
-                        "video video" 
+                        "fotoFriends fotoFriends" 
                         "footer footer";
     
     padding: 0;
@@ -32,17 +32,24 @@
 
         .navBotones{
             ul{
+                display: flex;
+                flex-direction: row;
+                list-style: none;   
                 li{
-                    display: inline-block;
                     button{     
                         text-decoration: none;                 
                         display: inline-block;
+                        list-style: none;
                         background-color: gray;
                         color: black;
                         border-radius: 50px;
-                        font-size: 20px;
-                        margin: 10px;
+                        font-size: 30px;
+                        margin: 10px 25px 10px 25px;
                         padding: 10px;
+                        &:hover{
+                            transform: scale(1.1);
+                            
+                        }
                     }
                 }
             }
@@ -156,6 +163,17 @@
             }
 
         }
+        .formContestacion2{
+            @include flexCenter;
+            margin: 2rem;
+
+            #btnContestacion2{
+                @include botones;
+            }
+
+        }
+
+        
 
         //JUEGO 1
         .formJuego{
@@ -175,16 +193,28 @@
                 border-radius: 100px;
                 font-size: 30px;
                 font-weight: bolder;
-        }
+            }
+
+            div{
+                div{
+                    input{
+                        &:hover{
+                            transform: scale(1.5);
+                            background-color: black
+                            
+                        }
+                   
+                    }
+                }
+            }
+
  
         }
 
         //JUEGO 2
         .divJuego2{
             @include flexCenter;
-            position: relative;
-            
-
+        
             #temporizador2{
                 background-color: rgb(240, 134, 134);
                 padding: 20px;
@@ -245,16 +275,19 @@
         
     }
 
-    .video{
-        grid-area: video;
-        /* background-image: url('../img/introduccion.jpg');
+    .fotoFriends{
+        grid-area: fotoFriends;
+        background-image: url('../img/introduccion.jpg');
         background-repeat: no-repeat;
         background-size: cover;
-            */
+        
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        div{
+            margin-top: 20px;
+        }
         
     }    
     footer{
@@ -269,4 +302,4 @@
 
 
 
-@import "utilities/estilos600.scss";
+@import "utilities/estilos1130px.scss";

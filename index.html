@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="CSS/main.css">
 </head>
 <body class="contenedor">
+    <!-- ENCABEZADO DEL JUEGO -->
     <header>
-
         <div id="divTitulos" class="divTitulos">
             <h1 id="txtTitulo">Bienvenido a QuienSabeMasFriends</h1>
             <h3 id="txtFrase">¡Pero ellos no saben que nosotros sabemos que saben que sabemos!</h3>
@@ -22,11 +22,11 @@
                 <li><button id="btnExplicacion" >Explicación</button></li>
             </ul>
         </nav>
-
     </header>
 
+    <!-- CONTENIDO DE INTERACCION CON EL USUARIO-->
     <main>
-        <!-- EXPLIACION -->
+        <!-- EXPLICACION DE JUEGO ENTERO -->
         <div id="divExplicacionJuego" class="divExplicacionJuego">
             <div>
                 <h3>Juego 1</h3>
@@ -67,7 +67,7 @@
             <input id="btnExplicacion2" class="botones" type="submit" value="Entiendo">
         </form>
 
-        <!-- CONTESTACION EN JUEGOS -->
+        <!-- CONTESTACION EN JUEGO 1 -->
         <form action="" id="formContestacion1" class="formContestacion1">
             <p id="contestacion1"></p>
             <input id="btnContestacion1" type="submit" class="botones" value="Siguiente">
@@ -76,22 +76,21 @@
         <!-- JUEGO 1 -->    
 
         <form action="" id="formJuego" class="formJuego">
-            <div id="barraTiempo1"></div>
             <P id="temporizador1"></P>
             <p id="pregunta"></p>
-          <div>
-              <div>
-                  <input type="radio" name="opcion" value="respuesta1" id="resp1">
-                  <label for="resp1" id="opcion1"></label>
-              </div>
-              <div>
-                  <input type="radio" name="opcion" value="respuesta2" id="resp2">
-                  <label for="resp2" id="opcion2"></label>
-              </div>
-              <div>
-                  <input type="radio" name="opcion" value="respuesta3" id="resp3">
-                  <label for="resp3" id="opcion3"></label>
-          </div>
+            <div>
+                <div>
+                    <input type="radio" name="opcion" value="respuesta1" id="resp1">
+                    <label for="resp1" id="opcion1"></label>
+                </div>
+                 <div>
+                    <input type="radio" name="opcion" value="respuesta2" id="resp2">
+                    <label for="resp2" id="opcion2"></label>
+                 </div>
+                <div>
+                    <input type="radio" name="opcion" value="respuesta3" id="resp3">
+                    <label for="resp3" id="opcion3"></label>
+                </div>
             </div>
             <input id="btnRJ1" class="botones" type="submit" value="Responder">
         </form> 
@@ -111,30 +110,25 @@
                 
             </div>
             <div>
-                <button id="btnInicio">Inicio</button>
-                <button id="btnJugar3" >Volver a jugar</button>
+                <button id="volverJugar" >Volver a jugar</button>
             </div>
-            
-
         </div>
-      
-     
-        
     </main>
 
-    <section class="video">
-        <p>Conoces a todos los personajes?</p>
+    <!-- SECCION PARA MOSTRAR FOTOS DE PERSONAJES-->
+    <section class="fotoFriends">
         <div>
             <img src="img/introduccion.jpg" alt="">
-        </div>
+        </div> -->
     </section>
 
+    <!-- PIE DE PAGINA-->
     <footer>
         <p>Derechos reservado - Chirola Web</p>
     </footer>
     
+    <!-- DECLARACION DE SCRIPTS-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="script.js"></script> 
 
 </body>
