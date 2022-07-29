@@ -526,7 +526,7 @@ class SegundoJuego{
             divJuego2.className = "hide";
             Swal.fire({
                 title: 'Ups... Te equivocaste.',
-                text: `No existe ningun personajes con ese nombre`,
+                text: `No existe ningun personaje con ese nombre`,
                 icon: 'warning',
                 confirmButtonText: 'Fin de Juego',
                 color: "gray",
