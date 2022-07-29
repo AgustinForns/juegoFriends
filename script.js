@@ -72,7 +72,7 @@ const volverJugar = document.getElementById("volverJugar");
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-//--------------------------------------------------------------------------------OBTENCION DE DATOS .JSON
+//--------------------------------------------------------------------------------OBTENCION DE URL DATOS .JSON
  const URLpreguntasYrespuetsas = "datos/preguntasYrespuestas.json";
  const URLdatosPersonajes = "datos/datosPersonajes.json";
 
