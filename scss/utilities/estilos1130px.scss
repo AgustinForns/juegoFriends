@@ -2,7 +2,7 @@
 
     .contenedor{
         display: grid;
-        grid-template-rows: 3fr 6fr 1fr;
+        grid-template-rows: 3fr 8fr 0.5fr;
         grid-template-columns: 55% 45%;
         grid-template-areas: "header header" 
                             "main fotoFriends" 
@@ -138,6 +138,7 @@
             //JUEGO 2
             .divJuego2{
                 @include flexCenter;
+              
                 
                 #btnRJ2{
                     @include botones;
@@ -187,6 +188,9 @@
         }    
         footer{
             grid-area: footer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background-color: gray;
             p{
                 text-align: center;

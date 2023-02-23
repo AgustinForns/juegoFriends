@@ -423,8 +423,7 @@ class SegundoJuego{
     static leerApellido(datosPersonajes, nom){
         let apell = respJ2.value.toLowerCase();
         if ((datosPersonajes.find((id) => id.nombre.toLowerCase() === nom.toLowerCase())).apellido.toLowerCase() === apell) {
-            divJuego2.className = "hide";
-
+          
             Swal.fire({
                 title: 'Ganaste!!',
                 text: `Es correcto! El nombre y apellido del personaje es ${nom.charAt(0).toUpperCase() + nom.slice(1)} ${apell.charAt(0).toUpperCase() + apell.slice(1)}
@@ -436,13 +435,12 @@ class SegundoJuego{
                 allowOutsideClick: false,
                
             }).then((result) => {
+                divJuego2.className = "hide";
                 if (result.isConfirmed) {
                     FinDelJuego.mostrarPersonajes();
                 }
             })              
         } else {
-
-            divJuego2.className = "hide";
 
             Swal.fire({
                 title: 'Ups... Perdiste!',
@@ -454,6 +452,7 @@ class SegundoJuego{
                 allowOutsideClick: false,
                
             }).then((result) => {
+                divJuego2.className = "hide";
                 if (result.isConfirmed) {
                     FinDelJuego.mostrarPersonajes();
                 }
@@ -465,8 +464,7 @@ class SegundoJuego{
     static leerNombre(datosPersonajes) {
         let nom = respJ2.value;
         if ((datosPersonajes.some(id => id.nombre.toLowerCase() === nom.toLowerCase())) === true) {
-            formJuego.className = "hide";
-            divJuego2.className = "hide";
+           
 
             Swal.fire({
                 title: 'Correcto!',
@@ -479,6 +477,8 @@ class SegundoJuego{
                
             }).then((result) => {
                 if (result.isConfirmed) {   
+                    formJuego.className = "hide";
+                    divJuego2.className = "hide";
                     respJ2.value = "";
                     respJ2.placeholder = "Apellido del personaje" ;        
                     divExplicacion2.className = "hide";
@@ -514,7 +514,7 @@ class SegundoJuego{
                 }
             })
         } else { 
-            divJuego2.className = "hide";
+            
             Swal.fire({
                 title: 'Ups... Te equivocaste.',
                 text: `No existe ningun personaje con ese nombre`,
@@ -526,6 +526,7 @@ class SegundoJuego{
                
             }).then((result) => {
                 if (result.isConfirmed) {
+                    divJuego2.className = "hide";
                     FinDelJuego.mostrarPersonajes();
                 }
             })                                          

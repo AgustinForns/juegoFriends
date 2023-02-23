@@ -204,7 +204,8 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 1.5rem; }
+      font-size: 1.5rem;
+      margin-bottom: 20px; }
       .contenedor main .divJuego2 #temporizador2 {
         background-color: #f08686;
         padding: 20px;
@@ -273,7 +274,7 @@
 @media only screen and (min-width: 1130px) {
   .contenedor {
     display: grid;
-    grid-template-rows: 3fr 6fr 1fr;
+    grid-template-rows: 3fr 8fr 0.5fr;
     grid-template-columns: 55% 45%;
     grid-template-areas: "header header"  "main fotoFriends"  "footer footer";
     padding: 0;
@@ -453,6 +454,9 @@
         display: none; }
     .contenedor footer {
       grid-area: footer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background-color: gray; }
       .contenedor footer p {
         text-align: center; } }
